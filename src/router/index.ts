@@ -27,11 +27,7 @@ const routes = [
     name: 'Quiz',
     component: () => import('@/views/Quiz.vue'),
   },
-  {
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: () => import('@/views/NotFound.vue'),
-  },
+  
 ]
 
 const router = createRouter({
