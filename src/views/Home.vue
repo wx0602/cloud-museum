@@ -1,19 +1,15 @@
 <template>
-  <main class="home-point">
-    <cus-header></cus-header>
-    <router-view></router-view>
-  </main>
+  <div class="home">
+    <h1>云端博物馆</h1>
+    <p>欢迎来到云端博物馆！请从上方导航选择页面。</p>
+  </div>
 </template>
-<script setup lang="ts">
-import { onMounted } from "vue";
-import CusHeader from "@/components/CusHeader.vue";
-import { userStore, indexStore } from "@/stores";
-const user_store = userStore();
-const index_store = indexStore();
-onMounted(() => {
-  user_store.getUser();
-  index_store.getCatalogs();
-  index_store.getMemos();
-  index_store.getActiveId();
-});
-</script>
+
+<script setup lang="ts"></script>
+
+<style scoped>
+.home {
+  text-align: center;
+  margin-top: 2rem;
+}
+</style>

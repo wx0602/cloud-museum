@@ -1,43 +1,42 @@
-import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "@/views/Home.vue";
-import LoginView from "@/views/Login.vue";
-import { localGetItem } from "@/utils";
-import dayjs from "dayjs";
+import { createRouter, createWebHistory } from 'vue-router'
+
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: () => import('@/views/Home.vue'),
+  },
+  {
+    path: '/museums',
+    name: 'MuseumDirectory',
+    component: () => import('@/views/MuseumDirectory.vue'),
+  },
+  {
+    path: '/vr',
+    name: 'VRGallery',
+    component: () => import('@/views/VRGallery.vue'),
+  },
+  {
+    path: '/artifact/:id',
+    name: 'ArtifactDetail',
+    component: () => import('@/views/ArtifactDetail.vue'),
+    props: true,
+  },
+  {
+    path: '/quiz',
+    name: 'Quiz',
+    component: () => import('@/views/Quiz.vue'),
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('@/views/NotFound.vue'),
+  },
+]
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes: [
-    {
-      path: "/",
-      component: HomeView,
-      redirect: "/index",
-      children: [
-        {
-          path: "index",
-          component: () => import("@/views/index/index.vue"),
-        },
-      ],
-    },
-    {
-      path: "/login",
-      component: LoginView,
-    },
-  ],
-});
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes,
+})
 
-router.beforeEach((to, from, next) => {
-  let user = localGetItem("login_user");
-  let is_valid = dayjs().isBefore(dayjs(user?.login_at).add(3, "day"));
-  if (to.fullPath != "/login") {
-    if (!user || !is_valid) {
-      return next("/login");
-    }
-  } else {
-    if (user && is_valid) {
-      return next("/");
-    }
-  }
-  next();
-});
-
-export default router;
+export default router
