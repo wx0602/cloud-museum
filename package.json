@@ -6,7 +6,9 @@
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
-    "type-check": "vue-tsc --noEmit"
+    "type-check": "vue-tsc --noEmit",
+    "server": "node server/index.js",
+    "serve": "node server/index.js"
   },
   "license": "ISC",
   "dependencies": {
