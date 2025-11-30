@@ -12,11 +12,13 @@
     <main>
       <RouterView />
     </main>
+    <AiAssistant />
   </div>
 </template>
 
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import AiAssistant from '@/views/ai-assistant.vue'
 </script>
 
 <style scoped>
