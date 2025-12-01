@@ -1,0 +1,130 @@
+[
+  {
+    "id": 1,
+    "name": "中国国家博物馆",
+    "description": "位于北京天安门广场东侧，是代表国家收藏、研究、展示中国文化遗产的国家最高历史文化艺术殿堂。",
+    "image": "museum/中国国家博物馆.jpg",
+    "website": "http://www.chnmuseum.cn/",
+    "location": "北京"
+  },
+  {
+    "id": 2,
+    "name": "故宫博物院",
+    "description": "建立在明清两代皇宫紫禁城基础上的大型综合性古代艺术博物馆，是中国最大的古代文化艺术博物馆。",
+    "image": "museum/故宫博物院.jpg",
+    "website": "https://www.dpm.org.cn/",
+    "location": "北京"
+  },
+  {
+    "id": 3,
+    "name": "陕西历史博物馆",
+    "description": "中国第一座大型现代化国家级博物馆，被誉为古都明珠、华夏宝库。",
+    "image": "museum/陕西历史博物馆.jpg",
+    "website": "http://www.sxhm.com/",
+    "location": "陕西"
+  },
+  {
+    "id": 4,
+    "name": "河南博物院",
+    "description": "我国成立较早的博物馆之一，现有藏品17万余件，以史前文物、商周青铜器、历代陶瓷器等为特色。",
+    "image": "museum/河南博物院.jpg",
+    "website": "https://www.chnmus.net/",
+    "location": "河南"
+  },
+  {
+    "id": 5,
+    "name": "湖南省博物馆",
+    "description": "以马王堆汉墓出土文物、商周青铜器等蜚声中外，是湖南省最大的历史艺术博物馆。",
+    "image": "museum/湖南省博物馆.jpg",
+    "website": "http://www.hnmuseum.com/",
+    "location": "湖南"
+  },
+  {
+    "id": 6,
+    "name": "南京博物院",
+    "description": "中国创建最早的博物馆、中国第一座由国家投资兴建的大型综合类博物馆。",
+    "image": "museum/南京博物院.jpg",
+    "website": "http://www.njmuseum.com/",
+    "location": "江苏"
+  },
+  {
+    "id": 7,
+    "name": "浙江省博物馆",
+    "description": "成立于1929年，是浙江省内最大的综合性人文科学博物馆，馆藏文物达十万余件。",
+    "image": "museum/浙江省博物馆.jpg",
+    "website": "https://www.zhejiangmuseum.com/",
+    "location": "浙江"
+  },
+  {
+    "id": 8,
+    "name": "上海博物馆",
+    "description": "大型的中国古代艺术博物馆，收藏文物近102万件，以青铜器、陶瓷器、书法、绘画为特色。",
+    "image": "museum/上海博物馆.jpg",
+    "website": "https://www.shanghaimuseum.net/",
+    "location": "上海"
+  },
+  {
+    "id": 9,
+    "name": "湖北省博物馆",
+    "description": "国家一级博物馆，以曾侯乙编钟、越王勾践剑等珍贵文物闻名于世。",
+    "image": "museum/湖北省博物馆.jpg",
+    "website": "http://www.hbww.org/",
+    "location": "湖北"
+  },
+  {
+    "id": 10,
+    "name": "四川博物院",
+    "description": "西南地区最大的综合性博物馆，馆藏文物32万余件，以巴蜀青铜器、张大千书画等最具特色。",
+    "image": "museum/四川博物院.jpg",
+    "website": "http://www.scmuseum.cn/",
+    "location": "四川"
+  },
+  {
+    "id": 11,
+    "name": "山西博物院",
+    "description": "珍藏文物约40万件，以青铜、瓷器、石刻、壁画等最具特色，展现三晋文化的辉煌。",
+    "image": "museum/山西博物院.jpg",
+    "website": "http://www.shanximuseum.com/",
+    "location": "山西"
+  },
+  {
+    "id": 12,
+    "name": "辽宁省博物馆",
+    "description": "中国著名的历史艺术性博物馆，以辽宁地区考古发掘的文物和传世的历史艺术类文物为主体。",
+    "image": "museum/辽宁省博物馆.jpg",
+    "website": "http://www.lnmuseum.com.cn/",
+    "location": "辽宁"
+  },
+  {
+    "id": 13,
+    "name": "广东省博物馆",
+    "description": "国家一级博物馆，以岭南特色文物、外销艺术品等藏品著称。",
+    "image": "museum/广东省博物馆.jpg",
+    "website": "https://www.gdmuseum.com/",
+    "location": "广东"
+  },
+  {
+    "id": 14,
+    "name": "重庆中国三峡博物馆",
+    "description": "以长江三峡文化、巴渝文化、抗战文化、移民文化为特色的综合性博物馆。",
+    "image": "museum/重庆中国三峡博物馆.jpg",
+    "website": "http://www.3gmuseum.cn/",
+    "location": "重庆"
+  },
+  {
+    "id": 15,
+    "name": "甘肃省博物馆",
+    "description": "西北地区重要的博物馆，以丝绸之路文物、彩陶、汉简等藏品最具特色。",
+    "image": "museum/甘肃省博物馆.jpg",
+    "website": "http://www.gansumuseum.com/",
+    "location": "甘肃"
+  },
+  {
+    "id": 16,
+    "name": "天津博物馆",
+    "description": "集收藏、保护、研究、陈列为一体的大型综合性博物馆，馆藏文物近20万件。",
+    "image": "museum/天津博物馆.jpg",
+    "website": "https://www.tjbwg.cn/",
+    "location": "天津"
+  }
+]
