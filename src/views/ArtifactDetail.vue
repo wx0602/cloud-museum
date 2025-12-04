@@ -1,25 +1,94 @@
 <template>
   <div class="gallery-root">
+    <!-- 顶部 Banner -->
     <div class="banner-wrapper">
-      <img class="banner" :src="bannerSrc" alt="展览横幅" />
+      <img class="banner" src="/00A.svg" alt="展览横幅" />
     </div>
-    <section class="masonry" aria-label="文物瀑布流展示">
-      <article
-        v-for="item in artifacts"
-        :key="item.id"
-        class="card"
-        :style="{ marginTop: randomMargin() }"
-        @click="open(item)"
-        tabindex="0"
-        @keyup.enter="open(item)"
-      >
-        <img :src="item.img" :alt="item.shortDesc" class="card-img" />
-        <div class="card-content">
-          <h3 class="card-title">{{ item.shortDesc }}</h3>
-          <p class="card-desc">{{ item.desc }}</p>
-        </div>
-      </article>
-    </section>
+
+    <div class="gallery-title-wrapper">
+      <h2 class="section-title">文物介绍</h2>
+    </div>
+
+    <!-- 左侧导航 + 右侧文物列表 -->
+    <div class="layout">
+      <!-- 左侧朝代导航栏 -->
+      <aside class="sidebar">
+        <h2 class="nav-title">按朝代检索</h2>
+        <button
+          class="nav-item"
+          :class="{ active: selectedDynasty === '全部' }"
+          @click="selectDynasty('全部')"
+        >
+          全部文物
+        </button>
+        <button
+          v-for="d in dynasties"
+          :key="d"
+          class="nav-item"
+          :class="{ active: selectedDynasty === d }"
+          @click="selectDynasty(d)"
+        >
+          {{ d }}
+        </button>
+      </aside>
+
+      <!-- 右侧内容 -->
+      <main class="main-content">
+        <!-- 瀑布流布局 -->
+        <section
+          v-if="selectedDynasty === '全部'"
+          class="masonry"
+          aria-label="文物列表"
+        >
+          <article
+            v-for="item in filteredArtifacts"
+            :key="item.id"
+            class="card"
+            @click="open(item)"
+            tabindex="0"
+            @keyup.enter="open(item)"
+          >
+            <img
+              :src="item.img"
+              :alt="item.shortDesc"
+              class="card-img"
+            />
+            <div class="card-content">
+              <h3 class="card-title">{{ item.shortDesc }}</h3>
+              <p class="card-desc">{{ item.desc }}</p>
+            </div>
+          </article>
+        </section>
+
+        <!-- 按朝代筛选-->
+        <section
+          v-else
+          class="grid"
+          aria-label="文物列表"
+        >
+          <article
+            v-for="item in filteredArtifacts"
+            :key="item.id"
+            class="card"
+            @click="open(item)"
+            tabindex="0"
+            @keyup.enter="open(item)"
+          >
+            <img
+              :src="item.img"
+              :alt="item.shortDesc"
+              class="card-img"
+            />
+            <div class="card-content">
+              <h3 class="card-title">{{ item.shortDesc }}</h3>
+              <p class="card-desc">{{ item.desc }}</p>
+            </div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <!-- 弹出大图 -->
     <div v-if="active" class="lightbox" @click.self="close">
       <div class="lightbox-inner">
         <button class="close-btn" @click="close">×</button>
@@ -30,9 +99,11 @@
     </div>
   </div>
 </template>
+
 <script setup>
-import { ref } from 'vue'
-import bannerImg from '@/assets/ArtifactDetail/2.png'
+import { ref, computed } from 'vue'
+
+// 导入图片 
 import img2 from '@/assets/ArtifactDetail/图片 2.png'
 import img3 from '@/assets/ArtifactDetail/图片 3.png'
 import img4 from '@/assets/ArtifactDetail/图片 4.png'
@@ -61,42 +132,60 @@ import img26 from '@/assets/ArtifactDetail/图片 26.png'
 import img27 from '@/assets/ArtifactDetail/图片 27.png'
 import img28 from '@/assets/ArtifactDetail/图片 28.png'
 import img29 from '@/assets/ArtifactDetail/图片 29.png'
-const bannerSrc = bannerImg
+
+
+// dynasty 字段用来筛选
 const artifacts = ref([
-  { id: 1, img: img2, shortDesc: '四羊方尊', desc: '商朝晚期青铜礼器，是现存商代青铜方尊中最大的一件，现藏于中国国家博物馆。' },
-  { id: 2, img: img3, shortDesc: '清明上河图', desc: '北宋风俗画，张择端存世精品，生动记录了北宋都城东京的城市面貌和社会生活状况，现藏于北京故宫博物院。' },
-  { id: 3, img: img4, shortDesc: '后母戊鼎', desc: '商王祖庚或祖甲为祭祀其母戊所制，是迄今世界上出土最大、最重的青铜礼器，现藏于中国国家博物馆。' },
-  { id: 4, img: img5, shortDesc: '大禹治水大玉山', desc: '清代玉雕作品，以新疆和田玉为原料，按宋人《大禹治水图》雕刻而成，现藏于北京故宫博物院。' },
-  { id: 5, img: img6, shortDesc: '越王勾践剑', desc: '春秋晚期越国青铜器，因剑身上含铬金属而千年不锈，现藏于湖北省博物馆。' },
-  { id: 6, img: img7, shortDesc: '曾侯乙编钟', desc: '战国早期文物，由六十五件青铜编钟组成，音域跨五个半八度，现藏于湖北省博物馆。' },
-  { id: 7, img: img8, shortDesc: '明代凤冠', desc: '1957年出土于北京昌平定陵，冠上饰件以龙凤为主，工艺精湛，现藏于中国国家博物馆。' },
-  { id: 8, img: img9, shortDesc: '金缕玉衣', desc: '汉代皇帝和高级贵族的殓服，以金线缕结玉片制成，现藏于徐州博物馆的金缕玉衣是年代最早、工艺最精的一件。' },
-  { id: 9, img: img10, shortDesc: '镶金兽首玛瑙杯', desc: '唐代酒器，是唐代唯一一件俏色玉雕，现藏于陕西历史博物馆。' },
-  { id: 10, img: img11, shortDesc: '马踏飞燕', desc: '东汉青铜器，造型独特，是中国古代高超铸造业的象征，现藏于甘肃省博物馆。' },
-  { id: 11, img: img12, shortDesc: '太阳神鸟金饰', desc: '商周时期文物，2001年出土于成都金沙村，是古蜀国黄金工艺的代表，也是成都城市标志的核心图案。' },
-  { id: 12, img: img13, shortDesc: '传国玉玺', desc: '秦代用和氏璧镌刻而成，是中国历代正统皇帝的证凭，虽已失传，但在中国历史上影响深远。' },
-  { id: 13, img: img14, shortDesc: '五星出东方利中国', desc: '汉代蜀地织锦护臂，为国家一级文物，现藏于新疆博物馆。' },
-  { id: 14, img: img15, shortDesc: '水晶杯', desc: '战国晚期水晶器皿，是中国出土的早期水晶制品中器形最大的一件，现藏于杭州博物馆。' },
-  { id: 15, img: img16, shortDesc: '长信宫灯', desc: '西汉青铜器，1968年出土于河北满城中山靖王刘胜妻窦绾墓，现藏于河北博物院。' },
-  { id: 16, img: img17, shortDesc: '兵马俑', desc: '即秦始皇陵兵马俑，是秦朝规模宏大的陶俑群，被誉为"世界第八大奇迹"，现藏于秦始皇帝陵博物院。' },
-  { id: 17, img: img18, shortDesc: '铜冰鉴', desc: '战国时期青铜酒器，是最早的"冰箱"，现藏于中国国家博物馆。' },
-  { id: 18, img: img19, shortDesc: '佛指舍利', desc: '佛教圣物，其中法门寺地宫出土的佛指舍利最为著名，现藏于法门寺博物馆。' },
-  { id: 19, img: img20, shortDesc: '镂雕象牙云龙纹套球', desc: '清代工艺品，工艺复杂，层层嵌套，现藏于北京故宫博物院。' },
-  { id: 20, img: img21, shortDesc: '汝窑天蓝釉刻花鹅颈瓶', desc: '宋代汝窑瓷器，造型优美，现藏于河南博物院' },
-  { id: 21, img: img22, shortDesc: '妇好青铜鹗尊', desc: '商代晚期青铜器，为商王武丁配偶妇好的陪葬品，现藏于中国国家博物馆。' },
-  { id: 22, img: img23, shortDesc: '鹰形陶鼎', desc: '新石器时代仰韶文化陶器，造型生动，现藏于中国国家博物馆。' },
-  { id: 23, img: img24, shortDesc: '红山文化玉龙', desc: '新石器时代玉器，被称为"中华第一龙"，现藏于中国国家博物馆。' },
-  { id: 24, img: img25, shortDesc: '西周青铜利簋', desc: '西周早期青铜器，是目前确知的最早的西周青铜器，现藏于中国国家博物馆。' },
-  { id: 25, img: img26, shortDesc: '人面鱼纹彩陶盆', desc: '新石器时代仰韶文化彩陶，纹饰独特，现藏于中国国家博物馆。' },
-  { id: 26, img: img27, shortDesc: '嵌珍珠宝石金项链', desc: '隋代金器，工艺精美，现藏于中国国家博物馆。' },
-  { id: 27, img: img28, shortDesc: '孝端皇后九龙九凤冠', desc: '明代凤冠，1957年出土于北京昌平定陵，现藏于中国国家博物馆。' },
-  { id: 28, img: img29, shortDesc: '粉彩兽耳百鹿尊', desc: '清代乾隆时期瓷器，是景德镇粉彩瓷中的代表作，现藏于中国陶瓷博物馆。' }
+  { id: 1, img: img2, shortDesc: '四羊方尊', dynasty: '商朝', desc: '商朝晚期青铜礼器，是现存商代青铜方尊中最大的一件，现藏于中国国家博物馆。' },
+  { id: 2, img: img3, shortDesc: '清明上河图', dynasty: '宋朝', desc: '北宋风俗画，张择端存世精品，生动记录了北宋都城东京的城市面貌和社会生活状况，现藏于北京故宫博物院。' },
+  { id: 3, img: img4, shortDesc: '后母戊鼎', dynasty: '商朝', desc: '商王祖庚或祖甲为祭祀其母戊所制，是迄今世界上出土最大、最重的青铜礼器，现藏于中国国家博物馆。' },
+  { id: 4, img: img5, shortDesc: '大禹治水大玉山', dynasty: '清朝', desc: '清代玉雕作品，以新疆和田玉为原料，按宋人《大禹治水图》雕刻而成，现藏于北京故宫博物院。' },
+  { id: 5, img: img6, shortDesc: '越王勾践剑', dynasty: '春秋战国', desc: '春秋晚期越国青铜器，因剑身上含铬金属而千年不锈，现藏于湖北省博物馆。' },
+  { id: 6, img: img7, shortDesc: '曾侯乙编钟', dynasty: '春秋战国', desc: '战国早期文物，由六十五件青铜编钟组成，音域跨五个半八度，现藏于湖北省博物馆。' },
+  { id: 7, img: img8, shortDesc: '明代凤冠', dynasty: '明朝', desc: '1957年出土于北京昌平定陵，冠上饰件以龙凤为主，工艺精湛，现藏于中国国家博物馆。' },
+  { id: 8, img: img9, shortDesc: '金缕玉衣', dynasty: '汉朝', desc: '汉代皇帝和高级贵族的殓服，以金线缕结玉片制成，现藏于徐州博物馆的金缕玉衣是年代最早、工艺最精的一件。' },
+  { id: 9, img: img10, shortDesc: '镶金兽首玛瑙杯', dynasty: '唐代', desc: '唐代酒器，是唐代唯一一件俏色玉雕，现藏于陕西历史博物馆。' },
+  { id: 10, img: img11, shortDesc: '马踏飞燕', dynasty: '汉朝', desc: '东汉青铜器，造型独特，是中国古代高超铸造业的象征，现藏于甘肃省博物馆。' },
+  { id: 11, img: img12, shortDesc: '太阳神鸟金饰', dynasty: '商周', desc: '商周时期文物，2001年出土于成都金沙村，是古蜀国黄金工艺的代表，也是成都城市标志的核心图案。' },
+  { id: 12, img: img13, shortDesc: '传国玉玺', dynasty: '秦朝', desc: '秦代用和氏璧镌刻而成，是中国历代正统皇帝的证凭，虽已失传，但在中国历史上影响深远。' },
+  { id: 13, img: img14, shortDesc: '五星出东方利中国', dynasty: '汉朝', desc: '汉代蜀地织锦护臂，为国家一级文物，现藏于新疆博物馆。' },
+  { id: 14, img: img15, shortDesc: '水晶杯', dynasty: '春秋战国', desc: '战国晚期水晶器皿，是中国出土的早期水晶制品中器形最大的一件，现藏于杭州博物馆。' },
+  { id: 15, img: img16, shortDesc: '长信宫灯', dynasty: '汉朝', desc: '西汉青铜器，1968年出土于河北满城中山靖王刘胜妻窦绾墓，现藏于河北博物院。' },
+  { id: 16, img: img17, shortDesc: '兵马俑', dynasty: '秦朝', desc: '即秦始皇陵兵马俑，是秦朝规模宏大的陶俑群，被誉为"世界第八大奇迹"，现藏于秦始皇帝陵博物院。' },
+  { id: 17, img: img18, shortDesc: '铜冰鉴', dynasty: '春秋战国', desc: '战国时期青铜酒器，是最早的"冰箱"，现藏于中国国家博物馆。' },
+  { id: 18, img: img19, shortDesc: '佛指舍利', dynasty: '唐代', desc: '佛教圣物，其中法门寺地宫出土的佛指舍利最为著名，现藏于法门寺博物馆。' },
+  { id: 19, img: img20, shortDesc: '镂雕象牙云龙纹套球', dynasty: '清朝', desc: '清代工艺品，工艺复杂，层层嵌套，现藏于北京故宫博物院。' },
+  { id: 20, img: img21, shortDesc: '汝窑天蓝釉刻花鹅颈瓶', dynasty: '宋朝', desc: '宋代汝窑瓷器，造型优美，现藏于河南博物院。' },
+  { id: 21, img: img22, shortDesc: '妇好青铜鹗尊', dynasty: '商朝', desc: '商代晚期青铜器，为商王武丁配偶妇好的陪葬品，现藏于中国国家博物馆。' },
+  { id: 22, img: img23, shortDesc: '鹰形陶鼎', dynasty: '新石器时代', desc: '新石器时代仰韶文化陶器，造型生动，现藏于中国国家博物馆。' },
+  { id: 23, img: img24, shortDesc: '红山文化玉龙', dynasty: '新石器时代', desc: '新石器时代玉器，被称为"中华第一龙"，现藏于中国国家博物馆。' },
+  { id: 24, img: img25, shortDesc: '西周青铜利簋', dynasty: '西周', desc: '西周早期青铜器，是目前确知的最早的西周青铜器，现藏于中国国家博物馆。' },
+  { id: 25, img: img26, shortDesc: '人面鱼纹彩陶盆', dynasty: '新石器时代', desc: '新石器时代仰韶文化彩陶，纹饰独特，现藏于中国国家博物馆。' },
+  { id: 26, img: img27, shortDesc: '嵌珍珠宝石金项链', dynasty: '隋朝', desc: '隋代金器，工艺精美，现藏于中国国家博物馆。' },
+  { id: 27, img: img28, shortDesc: '孝端皇后九龙九凤冠', dynasty: '明朝', desc: '明代凤冠，1957年出土于北京昌平定陵，现藏于中国国家博物馆。' },
+  { id: 28, img: img29, shortDesc: '粉彩兽耳百鹿尊', dynasty: '清朝', desc: '清代乾隆时期瓷器，是景德镇粉彩瓷中的代表作，现藏于中国陶瓷博物馆。' }
 ])
+
 const active = ref(null)
-function randomMargin() {
-  const margins = ['0px', '10px', '20px', '30px', '40px']
-  return margins[Math.floor(Math.random() * margins.length)]
+const selectedDynasty = ref('全部')
+
+// 去重后的朝代表
+const dynasties = computed(() => {
+  const set = new Set(artifacts.value.map(a => a.dynasty))
+  return Array.from(set)
+})
+
+// 按朝代过滤后的文物
+const filteredArtifacts = computed(() => {
+  if (selectedDynasty.value === '全部') return artifacts.value
+  return artifacts.value.filter(a => a.dynasty === selectedDynasty.value)
+})
+
+
+function selectDynasty(d) {
+  selectedDynasty.value = d
 }
+
 function open(item) {
   active.value = item
 }
@@ -104,84 +193,239 @@ function close() {
   active.value = null
 }
 </script>
+
 <style scoped>
 .gallery-root {
-  background: #F6F1E7;
+  /*background: #F6F1E7;*/
   min-height: 100vh;
-  padding: 40px;
-  box-sizing: border-box;
   width: 100%;
 }
-.banner-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 50px;
-  max-width: 1600px;
-  margin-left: auto;
-  margin-right: auto;
+
+/* 标题容器*/
+.gallery-title-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 16px 0;  
+  box-sizing: border-box;
 }
+
+/* 标题样式*/
+.section-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #5b3a1a;
+  margin: 0 0 24px;
+  position: relative;
+  font-family: "Noto Serif SC", "Source Han Serif", serif;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, #c79c5b, #e0d4c0);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+/* 小屏适配 */
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 26px;
+    margin-bottom: 20px;
+  }
+}
+
+/* Banner */
+/* 外层容器*/
+.banner-wrapper {
+  width: 100%;
+  max-width: 1200px;       
+  margin: 16px auto 32px;  
+  padding: 0 8px;          
+  box-sizing: border-box;
+}
+
+/* 图片 */
 .banner {
   width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  border-radius: 20px;
-  box-shadow: 0 12px 36px rgba(0,0,0,0.15);
+  height: auto;          
+  display: block;
+  border: none;
+  border-radius: 0;         
 }
-.masonry {
-  column-count: 5;
-  column-gap: 25px;
-  width: 100%;
+
+/* 左侧导航、右侧内容整体布局 */
+.layout {
   max-width: 1800px;
   margin: 0 auto;
+  padding: 0 40px 40px;
+  box-sizing: border-box;
+  display: flex;
+  gap: 24px;
 }
-@media (max-width: 1400px) { .masonry { column-count: 4; } }
-@media (max-width: 1100px) { .masonry { column-count: 3; } }
-@media (max-width: 800px) { .masonry { column-count: 2; } }
-@media (max-width: 500px) { .masonry { column-count: 1; } }
-.card {
-  break-inside: avoid;
-  background: white;
-  margin-bottom: 25px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+
+/* 左侧导航栏 */
+.sidebar {
+  width: 220px;
+  background: #f0e3cf;
+  border-radius: 12px;
+  padding: 16px 14px 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  position: sticky;
+  top: 80px;
+  align-self: flex-start;
+}
+
+.nav-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  color: #5b3a1a;
+}
+
+.nav-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
   cursor: pointer;
-  transition: all 0.4s ease;
+  font-size: 14px;
+  color: #6b4b27;
+  transition: all 0.2s ease;
+}
+
+.nav-item:hover {
+  background: rgba(204, 162, 102, 0.2);
+}
+
+.nav-item.active {
+  background: #c79c5b;
+  color: #fff;
+}
+
+/* 右侧内容 */
+.main-content {
+  flex: 1;
+  padding: 0;
+  max-width: none;
+  margin: 0;
+}
+
+/* 右侧内容 */
+/* 右侧内容容器 */
+.main-content {
+  flex: 1;
+  padding: 0;
+  max-width: none;
+  margin: 0;
+}
+
+/* 瀑布流 */
+.masonry {
+  column-count: 4;
+  column-gap: 24px;
+}
+
+@media (max-width: 1400px) {
+  .masonry { column-count: 3; }
+}
+@media (max-width: 1000px) {
+  .layout {
+    flex-direction: column;
+  }
+  .sidebar {
+    position: static;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .nav-item {
+    width: auto;
+    flex: 0 0 auto;
+  }
+  .masonry { column-count: 2; }
+}
+@media (max-width: 600px) {
+  .masonry { column-count: 1; }
+}
+
+/* 横向 grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  align-items: flex-start;
+}
+
+@media (max-width: 1400px) {
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 1000px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .grid { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+}
+
+/*卡片*/
+.card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;  
+  break-inside: avoid;
+  display: inline-block; 
   width: 100%;
 }
+
 .card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.18);
+  transform: translateY(-5px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
+
+/*文本不截断*/
+.card-desc {
+  font-size: 13px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+  text-align: justify;
+  font-weight: 400;
+}
+
+
 .card-img {
   width: 100%;
   height: auto;
-  min-height: 200px;
-  max-height: 300px;
-  object-fit: cover;
   display: block;
+  object-fit: cover;
 }
+
 .card-content {
-  padding: 20px;
+  padding: 16px;
 }
+
 .card-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
-  margin: 0 0 12px 0;
-  color: #2c3e50; 
-  line-height: 1.3;
-  text-align: center;
+  margin: 0 0 8px 0;
+  color: #2c3e50;
+  text-align: left;
 }
 
-.card-desc {
-  font-size: 14px;
-  color: #5d6d7e; 
-  margin: 0;
-  line-height: 1.6;
-  text-align: justify;
-  font-weight: 500;
-}
 
+/* Lightbox */
 .lightbox {
   position: fixed;
   inset: 0;
@@ -222,7 +466,7 @@ function close() {
 
 .lightbox-full-desc {
   font-size: 16px;
-  color: #5d6d7e; 
+  color: #5d6d7e;
   line-height: 1.7;
   margin: 0;
   text-align: justify;

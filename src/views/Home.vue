@@ -1,13 +1,5 @@
 <template>
   <div class="home-container">
-    <nav class="nav">
-      <router-link to="/">首页</router-link>
-      <router-link to="/museums">博物馆目录</router-link>
-      <router-link to="/vr">VR 展厅</router-link>
-      <router-link :to="{ name: 'ArtifactDetail', params: { id: 1 } }">文物介绍</router-link>
-      <router-link to="/quiz">文物问答</router-link>
-    </nav>
-
     <!-- 主图区域-->
     <header class="hero">
       <div class="overlay"></div>
@@ -20,21 +12,21 @@
 
     <svg width="0" height="0">
       <filter id="goldCloudNoise">
-        <feTurbulence 
+        <feTurbulence
           type="fractalNoise"
           baseFrequency="0.8"
           numOctaves="4"
           seed="3"
           result="noise"
         >
-          <animate 
-            attributeName="baseFrequency" 
-            values="0.01 0.01; 0.05 0.2; 0.01 0.01" 
-            dur="20s" 
-            repeatCount="indefinite" 
+          <animate
+            attributeName="baseFrequency"
+            values="0.01 0.01; 0.05 0.2; 0.01 0.01"
+            dur="20s"
+            repeatCount="indefinite"
           />
         </feTurbulence>
-        <feDisplacementMap 
+        <feDisplacementMap
           in="noise"
           in2="noise"
           scale="40"
@@ -59,7 +51,6 @@
 <script>
 export default {
   name: "HomePage",
-
   methods: {
     go(name, id = null) {
       if (id) {
@@ -67,55 +58,27 @@ export default {
       } else {
         this.$router.push({ name });
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&display=swap");
 
 /* 整体背景 */
 .home-container {
   background: #f4ecd9;
   overflow: hidden;
   min-height: 100vh;
-  font-family: 'Noto Serif SC', "Source Han Serif", serif;
-}
-
-/* 玻璃拟态导航栏 */
-.nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 70px;
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  padding-left: 40px;
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.25);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  z-index: 20;
-}
-
-.nav a {
-  color: #8c6a20;
-  font-size: 18px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-.nav a:hover {
-  color: #b48a31;
+  font-family: "Noto Serif SC", "Source Han Serif", serif;
 }
 
 /* 主图区域 */
-.hero {
-  height: 100vh;
+.hero {       
+  height: calc(100vh - 70px);  
   width: 100%;
-  background-image: url('https://cdn.pixabay.com/photo/2016/11/29/11/50/ancient-1869298_1280.jpg');
+  background-image: url("https://cdn.pixabay.com/photo/2016/11/29/11/50/ancient-1869298_1280.jpg");
   background-size: cover;
   background-position: center;
   position: relative;
@@ -127,8 +90,8 @@ export default {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(0,0,0,0.15),
-    rgba(244,236,217,0.35)
+    rgba(0, 0, 0, 0.15),
+    rgba(244, 236, 217, 0.35)
   );
   z-index: 2;
 }
@@ -146,15 +109,15 @@ export default {
 
 /* 标题动画 */
 .hero-text h1 {
-  font-size: 80px;      
-  white-space: nowrap; 
+  font-size: 80px;
+  white-space: nowrap;
   margin: 0;
-  font-weight: 900; 
+  font-weight: 900;
   color: #ffffff;
   text-shadow: none;
   opacity: 0;
   animation: textDrawIn 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards 0.8s;
-  text-shadow: 
+  text-shadow:
     0 0 1px #ffd782,
     0 0 4px #b48a31,
     1px 1px 0 #5e471d,
@@ -163,15 +126,15 @@ export default {
 }
 
 @keyframes textDrawIn {
-  0% { 
-    opacity: 0; 
+  0% {
+    opacity: 0;
     clip-path: inset(0 100% 0 0);
   }
-  50% { 
-    opacity: 1; 
+  50% {
+    opacity: 1;
   }
-  100% { 
-    opacity: 1; 
+  100% {
+    opacity: 1;
     clip-path: inset(0 0% 0 0);
   }
 }
@@ -185,20 +148,28 @@ export default {
 
 /* 主图缩放动画 */
 @keyframes heroZoom {
-  0% { transform: scale(1.1); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* 文本渐入 */
 @keyframes fadeIn {
-  to { opacity: 1; }
+  to {
+    opacity: 1;
+  }
 }
 
 /* 卡片区域 */
 .sections {
   width: 100%;
   padding: 120px 0;
-  background-image: url('/back1.jpg');  
+  background-image: url("/back1.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -228,25 +199,25 @@ export default {
 }
 
 .section-card:nth-child(1) {
-  background-image: url('../assets/Home/he1.jpg');
+  background-image: url("../assets/Home/he1.jpg");
   background-size: cover;
   background-position: center;
 }
 
 .section-card:nth-child(2) {
-  background-image: url('../assets/Home/he2.jpg');
+  background-image: url("../assets/Home/he2.jpg");
   background-size: cover;
   background-position: center;
 }
 
 .section-card:nth-child(3) {
-  background-image: url('../assets/Home/he3.jpg');
+  background-image: url("../assets/Home/he3.jpg");
   background-size: cover;
   background-position: center;
 }
 
 .section-card:nth-child(4) {
-  background-image: url('../assets/Home/he4.jpg');
+  background-image: url("../assets/Home/he4.jpg");
   background-size: cover;
   background-position: center;
 }

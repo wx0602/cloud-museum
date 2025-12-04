@@ -1,33 +1,32 @@
 <template>
   <div class="museum-ai-container">
     <!-- 博物馆AI助手悬浮图标 -->
-    <div class="museum-ai-float" id="museumAiFloat" @click="openDialog" title="点击咨询博物馆AI助手">
-      <div class="ai-icon">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- 博物馆图标 -->
-          <path d="M12 2L2 7V10H22V7L12 2Z" fill="currentColor" />
-          <path d="M4 10V20H7V12H9V20H11V12H13V20H15V12H17V20H20V10H4Z" fill="currentColor" />
-          <path d="M2 20H22V22H2V20Z" fill="currentColor" />
-        </svg>
+    <div
+      class="museum-ai-float"
+      id="museumAiFloat"
+      @click="openDialog"
+      title="点击咨询博物馆AI助手"
+    >
+      <div class="ai-icon no-bg">
+        <img src="/qwq.png" alt="博物馆AI助手" class="ai-icon-img" />
       </div>
 
       <!-- 悬停提示 -->
       <div class="ai-tooltip" id="aiTooltip">
-        有什么想知道的博物馆的内容<br>可以点击我提问哦
+        有什么想知道的博物馆的内容<br />可以点击我提问哦
       </div>
     </div>
 
     <!-- 弹出对话框 -->
-    <div class="museum-ai-dialog" :class="{ active: isDialogOpen }" id="museumAiDialog">
+    <div
+      class="museum-ai-dialog"
+      :class="{ active: isDialogOpen }"
+      id="museumAiDialog"
+    >
       <div class="dialog-header">
         <div class="header-content">
           <div class="ai-avatar">
-            <!-- 博物馆图标绘制 -->
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 7V10H22V7L12 2Z" fill="currentColor" />
-              <path d="M4 10V20H7V12H9V20H11V12H13V20H15V12H17V20H20V10H4Z" fill="currentColor" />
-              <path d="M2 20H22V22H2V20Z" fill="currentColor" />
-            </svg>
+            <img src="/qwq.png" alt="AI头像" class="ai-avatar-img" />
           </div>
           <div class="header-info">
             <h3 class="ai-title">博物馆AI助手</h3>
@@ -36,8 +35,17 @@
         </div>
         <button class="close-btn" @click="closeDialog" title="关闭对话框">
           <!-- 关闭图标 -->
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M18 6L6 18M6 6L18 18"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
           </svg>
         </button>
       </div>
@@ -46,11 +54,7 @@
         <!-- 欢迎消息 -->
         <div class="message ai-message" v-if="messageHistory.length === 0">
           <div class="message-avatar">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 2L2 7V10H22V7L12 2Z" fill="currentColor" />
-              <path d="M4 10V20H7V12H9V20H11V12H13V20H15V12H17V20H20V10H4Z" fill="currentColor" />
-              <path d="M2 20H22V22H2V20Z" fill="currentColor" />
-            </svg>
+            <img src="/qwq.png" alt="AI" class="ai-message-avatar-img" />
           </div>
           <div class="message-content">
             <div class="message-bubble">
@@ -63,14 +67,18 @@
         </div>
 
         <!-- 消息历史 -->
-        <div v-for="(msg, index) in messageHistory" :key="index" :class="['message', msg.sender + '-message', { 'error-message': msg.isError }]">
+        <div
+          v-for="(msg, index) in messageHistory"
+          :key="index"
+          :class="[
+            'message',
+            msg.sender + '-message',
+            { 'error-message': msg.isError }
+          ]"
+        >
           <div class="message-avatar">
             <template v-if="msg.sender === 'ai'">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 2L2 7V10H22V7L12 2Z" fill="currentColor" />
-                <path d="M4 10V20H7V12H9V20H11V12H13V20H15V12H17V20H20V10H4Z" fill="currentColor" />
-                <path d="M2 20H22V22H2V20Z" fill="currentColor" />
-              </svg>
+              <img src="/qwq.png" alt="AI" class="ai-message-avatar-img" />
             </template>
             <template v-else>
               👤
@@ -78,7 +86,10 @@
           </div>
           <div class="message-content">
             <div class="message-bubble">
-              <div class="message-html" v-html="formatContent(msg.content)"></div>
+              <div
+                class="message-html"
+                v-html="formatContent(msg.content)"
+              ></div>
             </div>
             <div class="message-time">{{ msg.timestamp }}</div>
           </div>
@@ -87,44 +98,99 @@
 
       <!-- 快捷问题按钮 -->
       <div class="quick-questions" v-if="!isStreaming">
-        <button class="question-btn" @click="askQuestion('介绍一下这里的镇馆之宝')">🏆 镇馆之宝</button>
-        <button class="question-btn" @click="askQuestion('最近有什么特别展览？')">📅 近期特展</button>
-        <button class="question-btn" @click="askQuestion('博物馆的开放时间是？')">⏰ 开放时间</button>
-        <button class="question-btn" @click="askQuestion('带孩子参观有什么建议？')">👶 亲子游览</button>
+        <button
+          class="question-btn"
+          @click="askQuestion('介绍一下这里的镇馆之宝')"
+        >
+          🏆 镇馆之宝
+        </button>
+        <button
+          class="question-btn"
+          @click="askQuestion('最近有什么特别展览？')"
+        >
+          📅 近期特展
+        </button>
+        <button
+          class="question-btn"
+          @click="askQuestion('博物馆的开放时间是？')"
+        >
+          ⏰ 开放时间
+        </button>
+        <button
+          class="question-btn"
+          @click="askQuestion('带孩子参观有什么建议？')"
+        >
+          👶 亲子游览
+        </button>
       </div>
 
       <div class="dialog-input">
         <div class="input-wrapper" :class="{ focused: isInputFocused }">
-          <textarea 
-            class="message-input" 
-            v-model="inputMessage" 
+          <textarea
+            class="message-input"
+            v-model="inputMessage"
             @keydown.enter.prevent="handleEnter"
             @focus="isInputFocused = true"
             @blur="isInputFocused = false"
             @input="adjustHeight"
             ref="textareaRef"
-            placeholder="请输入您想了解的博物馆相关问题..." 
+            placeholder="请输入您想了解的博物馆相关问题..."
             rows="1"
           ></textarea>
-          
-          <button v-if="isStreaming" class="stop-btn" @click="stopResponse" title="停止回答">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="6" y="6" width="12" height="12" rx="2" fill="currentColor" />
+
+          <button
+            v-if="isStreaming"
+            class="stop-btn"
+            @click="stopResponse"
+            title="停止回答"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="6"
+                y="6"
+                width="12"
+                height="12"
+                rx="2"
+                fill="currentColor"
+              />
             </svg>
           </button>
-          
-          <button v-else class="send-btn" @click="sendMessage" :disabled="!inputMessage.trim()">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+
+          <button
+            v-else
+            class="send-btn"
+            @click="sendMessage"
+            :disabled="!inputMessage.trim()"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
             </svg>
           </button>
         </div>
         <div class="input-info">
-          <span class="char-count" :style="{ color: inputMessage.length > 450 ? '#ff6b6b' : '#999' }">{{ inputMessage.length }}/500</span>
+          <span
+            class="char-count"
+            :style="{ color: inputMessage.length > 450 ? '#ff6b6b' : '#999' }"
+            >{{ inputMessage.length }}/500</span
+          >
           <span class="input-hint">按 Enter 发送，Shift+Enter 换行</span>
         </div>
       </div>
-      
+
       <!-- 加载动画 -->
       <div class="loading-indicator" v-if="isStreaming && !streamingRawText">
         <div class="typing-dots">
@@ -137,98 +203,110 @@
     </div>
 
     <!-- 遮罩层 -->
-    <div class="dialog-overlay" :class="{ active: isDialogOpen }" @click="closeDialog"></div>
+    <div
+      class="dialog-overlay"
+      :class="{ active: isDialogOpen }"
+      @click="closeDialog"
+    ></div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, nextTick, onMounted, onUnmounted, watch } from 'vue';
+import {
+  ref,
+  reactive,
+  nextTick,
+  onMounted,
+  onUnmounted
+} from 'vue'
 
 // 状态管理
-const isDialogOpen = ref(false);
-const isInputFocused = ref(false);
-const inputMessage = ref('');
-const messageHistory = reactive([]); // { content, sender, timestamp, isError }
-const isStreaming = ref(false);
-const streamingRawText = ref('');
-const messagesContainer = ref(null);
-const textareaRef = ref(null);
-let currentAbortController = null;
+const isDialogOpen = ref(false)
+const isInputFocused = ref(false)
+const inputMessage = ref('')
+const messageHistory = reactive([]) // { content, sender, timestamp, isError }
+const isStreaming = ref(false)
+const streamingRawText = ref('')
+const messagesContainer = ref(null)
+const textareaRef = ref(null)
+let currentAbortController = null
 
 // API 配置
-const API_ENDPOINT = '/api/chat';
+const API_ENDPOINT = '/api/chat'
 
 // 打开/关闭对话框
 const openDialog = () => {
-  isDialogOpen.value = true;
-  document.body.style.overflow = 'hidden';
+  isDialogOpen.value = true
+  document.body.style.overflow = 'hidden'
   setTimeout(() => {
-    if (textareaRef.value) textareaRef.value.focus();
-    scrollToBottom();
-  }, 300);
-};
+    if (textareaRef.value) textareaRef.value.focus()
+    scrollToBottom()
+  }, 300)
+}
 
 const closeDialog = () => {
-  isDialogOpen.value = false;
-  document.body.style.overflow = '';
-};
+  isDialogOpen.value = false
+  document.body.style.overflow = ''
+}
 
 // 发送消息
 const sendMessage = async () => {
-  const text = inputMessage.value.trim();
-  if (!text || isStreaming.value) return;
+  const text = inputMessage.value.trim()
+  if (!text || isStreaming.value) return
 
   // 添加用户消息
-  addMessage(text, 'user');
-  inputMessage.value = '';
-  adjustHeight();
+  addMessage(text, 'user')
+  inputMessage.value = ''
+  adjustHeight()
 
   // 准备AI回复
-  isStreaming.value = true;
-  streamingRawText.value = '';
-  
+  isStreaming.value = true
+  streamingRawText.value = ''
+
   // 添加一个空的AI消息用于流式更新
-  const aiMessageIndex = messageHistory.push({
-    content: '',
-    sender: 'ai',
-    timestamp: getCurrentTime(),
-    isError: false
-  }) - 1;
+  const aiMessageIndex =
+    messageHistory.push({
+      content: '',
+      sender: 'ai',
+      timestamp: getCurrentTime(),
+      isError: false
+    }) - 1
 
   try {
-    await streamResponse(text, (chunk) => {
-      streamingRawText.value += chunk;
-      messageHistory[aiMessageIndex].content = streamingRawText.value;
-      scrollToBottom();
-    });
+    await streamResponse(text, chunk => {
+      streamingRawText.value += chunk
+      messageHistory[aiMessageIndex].content = streamingRawText.value
+      scrollToBottom()
+    })
   } catch (error) {
     if (error.name !== 'AbortError') {
-      messageHistory[aiMessageIndex].content = streamingRawText.value || `请求失败：${error.message}`;
-      messageHistory[aiMessageIndex].isError = true;
+      messageHistory[aiMessageIndex].content =
+        streamingRawText.value || `请求失败：${error.message}`
+      messageHistory[aiMessageIndex].isError = true
     }
   } finally {
-    isStreaming.value = false;
-    currentAbortController = null;
+    isStreaming.value = false
+    currentAbortController = null
   }
-};
+}
 
-const handleEnter = (e) => {
-  if (e.shiftKey) return;
-  sendMessage();
-};
+const handleEnter = e => {
+  if (e.shiftKey) return
+  sendMessage()
+}
 
-const askQuestion = (text) => {
-  inputMessage.value = text;
-  sendMessage();
-};
+const askQuestion = text => {
+  inputMessage.value = text
+  sendMessage()
+}
 
 const stopResponse = () => {
   if (currentAbortController) {
-    currentAbortController.abort();
-    currentAbortController = null;
+    currentAbortController.abort()
+    currentAbortController = null
   }
-  isStreaming.value = false;
-};
+  isStreaming.value = false
+}
 
 // 辅助函数
 const addMessage = (content, sender, isError = false) => {
@@ -237,32 +315,37 @@ const addMessage = (content, sender, isError = false) => {
     sender,
     timestamp: getCurrentTime(),
     isError
-  });
-  scrollToBottom();
-};
+  })
+  scrollToBottom()
+}
 
 const getCurrentTime = () => {
-  return new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
-};
+  return new Date().toLocaleTimeString('zh-CN', {
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+}
 
 const scrollToBottom = () => {
   nextTick(() => {
     if (messagesContainer.value) {
-      messagesContainer.value.scrollTop = messagesContainer.value.scrollHeight;
+      messagesContainer.value.scrollTop =
+        messagesContainer.value.scrollHeight
     }
-  });
-};
+  })
+}
 
 const adjustHeight = () => {
-  if (!textareaRef.value) return;
-  textareaRef.value.style.height = 'auto';
-  textareaRef.value.style.height = Math.min(textareaRef.value.scrollHeight, 120) + 'px';
-};
+  if (!textareaRef.value) return
+  textareaRef.value.style.height = 'auto'
+  textareaRef.value.style.height =
+    Math.min(textareaRef.value.scrollHeight, 120) + 'px'
+}
 
 // 流式请求逻辑
 const streamResponse = async (userMessage, onChunk) => {
-  currentAbortController = new AbortController();
-  
+  currentAbortController = new AbortController()
+
   // 构建历史消息上下文
   const historyContext = messageHistory
     .filter(m => !m.isError && m.content) // 过滤掉错误和空消息
@@ -270,7 +353,7 @@ const streamResponse = async (userMessage, onChunk) => {
     .map(m => ({
       role: m.sender === 'ai' ? 'assistant' : 'user',
       content: m.content
-    }));
+    }))
 
   const payload = {
     messages: [
@@ -278,186 +361,260 @@ const streamResponse = async (userMessage, onChunk) => {
       { role: 'user', content: userMessage }
     ],
     stream: true
-  };
+  }
 
   const response = await fetch(API_ENDPOINT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
     signal: currentAbortController.signal
-  });
+  })
 
   if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
+    throw new Error(`HTTP error! status: ${response.status}`)
   }
 
-  const reader = response.body.getReader();
-  const decoder = new TextDecoder();
-  
+  const reader = response.body.getReader()
+  const decoder = new TextDecoder()
+
   while (true) {
-    const { value, done } = await reader.read();
-    if (done) break;
-    
-    const chunk = decoder.decode(value, { stream: true });
+    const { value, done } = await reader.read()
+    if (done) break
+
+    const chunk = decoder.decode(value, { stream: true })
     // 处理SSE格式或直接文本
-    // 假设后端直接透传DeepSeek的SSE流
-    const lines = chunk.split('\n');
+    const lines = chunk.split('\n')
     for (const line of lines) {
-      const trimmed = line.trim();
-      if (!trimmed || trimmed === 'data: [DONE]') continue;
+      const trimmed = line.trim()
+      if (!trimmed || trimmed === 'data: [DONE]') continue
       if (trimmed.startsWith('data: ')) {
         try {
-          const json = JSON.parse(trimmed.slice(6));
-          const content = json.choices?.[0]?.delta?.content || '';
-          if (content) onChunk(content);
+          const json = JSON.parse(trimmed.slice(6))
+          const content = json.choices?.[0]?.delta?.content || ''
+          if (content) onChunk(content)
         } catch (e) {
           // 忽略解析错误
         }
       }
     }
   }
-};
+}
 
 // Markdown 格式化
-const formatContent = (text) => {
-  if (!text) return '';
+const formatContent = text => {
+  if (!text) return ''
   let html = text
     .replace(/&/g, '&amp;')
     .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;');
+    .replace(/>/g, '&gt;')
 
   // 代码块
-  html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
-  
-  // 行内代码
-  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-  
-  // 加粗
-  html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  
-  // 标题 (简单处理)
-  html = html.replace(/^### (.*$)/gm, '<h3>$1</h3>');
-  html = html.replace(/^## (.*$)/gm, '<h2>$1</h2>');
-  html = html.replace(/^# (.*$)/gm, '<h1>$1</h1>');
-  
-  // 列表
-  html = html.replace(/^\s*[-*] (.*$)/gm, '<li>$1</li>');
-  html = html.replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>'); // 简单包裹，可能不完美但够用
-  
-  // 换行转<br> (排除标签内的换行)
-  html = html.replace(/\n/g, '<br>');
-  
-  // 修复列表被br破坏的问题 (简单修复)
-  html = html.replace(/<\/li><br>/g, '</li>');
-  html = html.replace(/<\/ul><br>/g, '</ul>');
-  html = html.replace(/<\/h\d><br>/g, (match) => match.replace('<br>', ''));
+  html = html.replace(
+    /```([\s\S]*?)```/g,
+    '<pre><code>$1</code></pre>'
+  )
 
-  return html;
-};
+  // 行内代码
+  html = html.replace(
+    /`([^`]+)`/g,
+    '<code>$1</code>'
+  )
+
+  // 加粗
+  html = html.replace(
+    /\*\*([^*]+)\*\*/g,
+    '<strong>$1</strong>'
+  )
+
+  // 标题
+  html = html.replace(
+    /^### (.*$)/gm,
+    '<h3>$1</h3>'
+  )
+  html = html.replace(
+    /^## (.*$)/gm,
+    '<h2>$1</h2>'
+  )
+  html = html.replace(
+    /^# (.*$)/gm,
+    '<h1>$1</h1>'
+  )
+
+  // 列表
+  html = html.replace(
+    /^\s*[-*] (.*$)/gm,
+    '<li>$1</li>'
+  )
+  html = html.replace(
+    /(<li>.*<\/li>)/s,
+    '<ul>$1</ul>'
+  )
+
+  // 换行转<br>
+  html = html.replace(/\n/g, '<br>')
+
+  // 修复列表被br破坏的问题
+  html = html.replace(/<\/li><br>/g, '</li>')
+  html = html.replace(/<\/ul><br>/g, '</ul>')
+  html = html.replace(/<\/h\d><br>/g, match =>
+    match.replace('<br>', '')
+  )
+
+  return html
+}
 
 // ESC 关闭
-const handleEsc = (e) => {
+const handleEsc = e => {
   if (e.key === 'Escape' && isDialogOpen.value) {
-    closeDialog();
+    closeDialog()
   }
-};
+}
 
 onMounted(() => {
-  window.addEventListener('keydown', handleEsc);
-});
+  window.addEventListener('keydown', handleEsc)
+})
 
 onUnmounted(() => {
-  window.removeEventListener('keydown', handleEsc);
-});
+  window.removeEventListener('keydown', handleEsc)
+})
 </script>
 
 <style scoped>
-/* ==================== 悬浮AI助手图标 ==================== */
+/*颜色调整*/
+:root {
+  --ai-gold-light: #f5e6c8;
+  --ai-gold: #c79c5b;
+  --ai-gold-deep: #9a5f26;
+  --ai-ink-dark: #3f3325;
+  --ai-ink-muted: #7a6a55;
+  --ai-paper: #f6f1e7;
+}
+
+/*悬浮AI助手图标*/
 .museum-ai-float {
   position: fixed;
   right: 30px;
   bottom: 30px;
   z-index: 2000;
   cursor: pointer;
-}
-
-.ai-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  box-shadow: 0 8px 25px rgba(79, 172, 254, 0.3);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-}
-
-.ai-icon svg {
-  width: 28px;
-  height: 28px;
-  transition: transform 0.3s ease;
-}
-
-/* 悬停效果 */
-.museum-ai-float:hover .ai-icon {
-  transform: scale(1.1);
-  box-shadow: 0 12px 35px rgba(79, 172, 254, 0.4);
-}
-
-.museum-ai-float:hover .ai-icon svg {
-  transform: scale(1.1);
-}
-
-.museum-ai-float:active .ai-icon {
-  transform: scale(1.05);
-}
-
-/* 脉冲动画效果 */
-.ai-icon::before {
-  content: '';
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  right: -5px;
-  bottom: -5px;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  border-radius: 50%;
-  opacity: 0;
-  animation: pulse 2s infinite;
-}
-
-/* 闲置时的浮动动画 */
-.museum-ai-float {
   animation: floatIdle 6s ease-in-out infinite;
 }
 
-@keyframes floatIdle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+/*浮动图标容器*/
+.ai-icon {
+  width: 80px;     
+  height: 80px;
+  border-radius: 50%;  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-/* 悬停时暂停闲置动画，使用原本的缩放 */
+/*移除背景*/
+.ai-icon.no-bg {
+  background: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important; 
+  overflow: visible;
+}
+
+/*图标图片*/
+.ai-icon-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0; 
+}
+
+/*外圈淡金色光晕*/
+.ai-icon.no-bg::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  right: -10px;
+  bottom: -10px;
+  border-radius: 50%;
+  background: radial-gradient(
+    rgba(255, 236, 180, 0.9),
+    rgba(255, 236, 180, 0)
+  );
+  opacity: 0.8;
+  filter: blur(10px);
+  z-index: -1;
+  animation: glowPulse 2.4s infinite ease-in-out;
+}
+
+@keyframes glowPulse {
+  0% { transform: scale(0.9); opacity: 0.6; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+/* 悬停放大 */
+.museum-ai-float:hover .ai-icon-img {
+  transform: scale(1.08);
+}
+
+/*淡金色脉冲光晕*/
+.ai-icon::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  background: radial-gradient(
+    circle,
+    rgba(255, 238, 190, 0.8),
+    rgba(199, 156, 91, 0)
+  );
+  border-radius: 50%;
+  opacity: 0;
+  animation: pulse 2.2s infinite;
+}
+
+/* 闲置时的浮动动画 */
+@keyframes floatIdle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 .museum-ai-float:hover {
   animation-play-state: paused;
 }
 
 @keyframes pulse {
-  0% { opacity: 0; transform: scale(1); }
-  50% { opacity: 0.3; transform: scale(1.1); }
-  100% { opacity: 0; transform: scale(1.2); }
+  0% {
+    opacity: 0;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.2);
+  }
 }
 
-/* ==================== 悬停提示框 ==================== */
+/*悬停提示框*/
 .ai-tooltip {
   position: absolute;
   right: 70px;
   bottom: 50%;
   transform: translateY(50%);
-  background: rgba(0, 0, 0, 0.8);
-  color: white;
+  background: rgba(63, 51, 37, 0.92);
+  color: #fef7e9;
   padding: 12px 16px;
   border-radius: 8px;
   font-size: 14px;
@@ -468,6 +625,7 @@ onUnmounted(() => {
   pointer-events: none;
   backdrop-filter: blur(10px);
   line-height: 1.4;
+  border: 1px solid rgba(199, 156, 91, 0.7);
 }
 
 .ai-tooltip::after {
@@ -477,7 +635,7 @@ onUnmounted(() => {
   top: 50%;
   transform: translateY(-50%);
   border: 6px solid transparent;
-  border-left-color: rgba(0, 0, 0, 0.8);
+  border-left-color: rgba(63, 51, 37, 0.92);
 }
 
 .museum-ai-float:hover .ai-tooltip {
@@ -486,14 +644,14 @@ onUnmounted(() => {
   transform: translateY(50%) translateX(-10px);
 }
 
-/* ==================== 弹出对话框 ==================== */
+/*弹出对话框*/
 .museum-ai-dialog {
   position: fixed;
   right: -450px;
   top: 0;
   width: 420px;
   height: 100vh;
-  background: white;
+  background: url('/ai-back.jpg') center / cover no-repeat;
   box-shadow: -10px 0 30px rgba(0, 0, 0, 0.2);
   z-index: 2001;
   display: flex;
@@ -501,19 +659,24 @@ onUnmounted(() => {
   transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+
 .museum-ai-dialog.active {
   right: 0;
 }
 
-/* 对话框头部 */
 .dialog-header {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
+  background-image: url('/ai-header.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: #3e2c16;            
   padding: 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
+  border-bottom: 1px solid rgba(140, 90, 30, 0.25);
 }
 
 .header-content {
@@ -525,18 +688,23 @@ onUnmounted(() => {
 .ai-avatar {
   width: 45px;
   height: 45px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 248, 230, 0.85);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: 15px;
   flex-shrink: 0;
+  box-shadow:
+    0 0 8px rgba(199, 156, 91, 0.8),
+    0 4px 12px rgba(140, 90, 30, 0.35);
 }
 
-.ai-avatar svg {
-  width: 24px;
-  height: 24px;
+.ai-avatar-img {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  border-radius: 50%;
 }
 
 .header-info {
@@ -555,13 +723,14 @@ onUnmounted(() => {
   font-weight: 400;
 }
 
+/* 关闭按钮 */
 .close-btn {
   width: 36px;
   height: 36px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 248, 230, 0.6);
   border: none;
   border-radius: 50%;
-  color: white;
+  color: #5c4120;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -571,8 +740,8 @@ onUnmounted(() => {
 }
 
 .close-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  transform: scale(1.1);
+  background: rgba(255, 248, 230, 0.9);
+  transform: scale(1.08);
 }
 
 .close-btn svg {
@@ -585,7 +754,6 @@ onUnmounted(() => {
   flex: 1;
   padding: 20px;
   overflow-y: auto;
-  background: #f8f9fa;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -596,17 +764,17 @@ onUnmounted(() => {
 }
 
 .dialog-messages::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #efe3d0;
   border-radius: 3px;
 }
 
 .dialog-messages::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
+  background: #c8b191;
   border-radius: 3px;
 }
 
 .dialog-messages::-webkit-scrollbar-thumb:hover {
-  background: #a8a8a8;
+  background: #b39772;
 }
 
 /* 消息样式 */
@@ -623,8 +791,14 @@ onUnmounted(() => {
 }
 
 @keyframes messageSlideIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.9); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .user-message {
@@ -647,20 +821,22 @@ onUnmounted(() => {
   flex-shrink: 0;
 }
 
+.ai-message-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: contain;
+  background: #fffdf6;  
+  box-shadow:
+    0 0 3px rgba(199, 156, 91, 0.35),
+    0 2px 4px rgba(120, 80, 30, 0.18); 
+}
+
+
 .user-message .message-avatar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #e0c8a0, #c19b6b);
   color: white;
   font-size: 16px;
-}
-
-.ai-message .message-avatar {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-  color: white;
-}
-
-.ai-message .message-avatar svg {
-  width: 16px;
-  height: 16px;
 }
 
 .message-content {
@@ -677,56 +853,67 @@ onUnmounted(() => {
 }
 
 .user-message .message-bubble {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, #e2cba7, #c19b6b);
+  color: #3f2c18;
   border-bottom-right-radius: 6px;
 }
 
 .ai-message .message-bubble {
-  background: white;
-  color: #333;
-  border: 1px solid #e9ecef;
+  background: rgba(255, 251, 244, 0.94);   
+  color: #4a3b2a;                          
+  border: 1px solid #efe2c9;               
   border-bottom-left-radius: 6px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 5px rgba(80, 60, 30, 0.05); 
 }
 
-.message-bubble p { margin: 0 0 8px 0; }
-.message-bubble p:last-child { margin-bottom: 0; }
-.message-bubble ul { margin: 8px 0; padding-left: 20px; }
-.message-bubble li { margin-bottom: 4px; }
+
+.message-bubble p {
+  margin: 0 0 8px 0;
+}
+.message-bubble p:last-child {
+  margin-bottom: 0;
+}
+.message-bubble ul {
+  margin: 8px 0;
+  padding-left: 20px;
+}
+.message-bubble li {
+  margin-bottom: 4px;
+}
 
 .message-time {
   margin-top: 5px;
   font-size: 11px;
-  color: #999;
+  color: #9a8a73;
   text-align: right;
 }
 
-.user-message .message-time { text-align: left; }
+.user-message .message-time {
+  text-align: left;
+}
 
 .error-message .message-bubble {
-  background: #ffe6e6;
-  border-color: #ffcccc;
-  color: #d63031;
+  background: #ffe8e4;
+  border-color: #f4b3a3;
+  color: #b04330;
 }
 
 /* 快捷问题按钮 */
 .quick-questions {
   padding: 15px 20px 10px;
-  background: white;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid #e3d3b8;
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
 .question-btn {
-  background: #f8f9fa;
-  border: 1px solid #e9ecef;
+  background: #f8efe0;
+  border: 1px solid #e3d3b8;
   border-radius: 20px;
   padding: 6px 12px;
   font-size: 12px;
-  color: #666;
+  color: #6f5a3c;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   display: flex;
@@ -735,30 +922,42 @@ onUnmounted(() => {
   animation: popIn 0.4s backwards;
 }
 
-/* 为每个按钮添加延迟，实现交错效果 */
-.question-btn:nth-child(1) { animation-delay: 0.1s; }
-.question-btn:nth-child(2) { animation-delay: 0.2s; }
-.question-btn:nth-child(3) { animation-delay: 0.3s; }
-.question-btn:nth-child(4) { animation-delay: 0.4s; }
+.question-btn:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.question-btn:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.question-btn:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.question-btn:nth-child(4) {
+  animation-delay: 0.4s;
+}
 
 @keyframes popIn {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .question-btn:hover {
-  background: #4facfe;
-  color: white;
-  border-color: #4facfe;
+  background: var(--ai-gold);
+  color: #fffaf0;
+  border-color: var(--ai-gold-deep);
   transform: translateY(-2px) scale(1.05);
-  box-shadow: 0 4px 10px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 4px 10px rgba(140, 90, 30, 0.35);
 }
 
 /* 输入区域 */
 .dialog-input {
-  background: white;
   padding: 15px 20px;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid #e3d3b8;
   flex-shrink: 0;
   position: relative;
   z-index: 10;
@@ -768,17 +967,17 @@ onUnmounted(() => {
   display: flex;
   align-items: flex-end;
   gap: 10px;
-  background: #f8f9fa;
-  border: 2px solid #e9ecef;
+  background: #f8f1e4;
+  border: 2px solid #e3d3b8;
   border-radius: 20px;
   padding: 8px 15px;
   transition: all 0.3s ease;
 }
 
 .input-wrapper.focused {
-  border-color: #4facfe;
-  background: white;
-  box-shadow: 0 0 0 4px rgba(79, 172, 254, 0.15);
+  border-color: var(--ai-gold);
+  background: #fffaf5;
+  box-shadow: 0 0 0 4px rgba(199, 156, 91, 0.2);
   transform: translateY(-1px);
 }
 
@@ -793,18 +992,21 @@ onUnmounted(() => {
   min-height: 20px;
   max-height: 100px;
   font-family: inherit;
-  color: #333;
+  color: #3f3325;
 }
 
-.message-input::placeholder { color: #999; }
+.message-input::placeholder {
+  color: #aa9a85;
+}
 
+/*发送按钮*/
 .send-btn {
   width: 32px;
   height: 32px;
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, var(--ai-gold), var(--ai-gold-deep));
   border: none;
   border-radius: 50%;
-  color: white;
+  color: #fffaf0;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -815,7 +1017,7 @@ onUnmounted(() => {
 
 .send-btn:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+  box-shadow: 0 4px 12px rgba(140, 90, 30, 0.35);
 }
 
 .send-btn:disabled {
@@ -824,8 +1026,12 @@ onUnmounted(() => {
   transform: none;
 }
 
-.send-btn svg { width: 16px; height: 16px; }
+.send-btn svg {
+  width: 16px;
+  height: 16px;
+}
 
+/* 停止按钮保持红色提示 */
 .stop-btn {
   width: 32px;
   height: 32px;
@@ -852,11 +1058,15 @@ onUnmounted(() => {
   align-items: center;
   margin-top: 8px;
   font-size: 11px;
-  color: #999;
+  color: #9a8a73;
 }
 
-.char-count { font-weight: 500; }
-.input-hint { font-style: italic; }
+.char-count {
+  font-weight: 500;
+}
+.input-hint {
+  font-style: italic;
+}
 
 /* Markdown 样式增强 */
 :deep(.message-html h1),
@@ -865,12 +1075,18 @@ onUnmounted(() => {
   margin: 6px 0 4px;
   font-weight: 600;
 }
-:deep(.message-html h1) { font-size: 1.2rem; }
-:deep(.message-html h2) { font-size: 1.15rem; }
-:deep(.message-html h3) { font-size: 1.1rem; }
+:deep(.message-html h1) {
+  font-size: 1.2rem;
+}
+:deep(.message-html h2) {
+  font-size: 1.15rem;
+}
+:deep(.message-html h3) {
+  font-size: 1.1rem;
+}
 
 :deep(.message-html code) {
-  background: #f1f3f5;
+  background: #f1e5cf;
   padding: 2px 6px;
   border-radius: 6px;
   font-family: monospace;
@@ -878,8 +1094,8 @@ onUnmounted(() => {
 }
 
 :deep(.message-html pre) {
-  background: #23252f;
-  color: #e8eaf6;
+  background: #2b2520;
+  color: #fbead4;
   padding: 10px 12px;
   border-radius: 12px;
   overflow: auto;
@@ -898,7 +1114,7 @@ onUnmounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(40, 30, 20, 0.35);
   z-index: 2000;
   opacity: 0;
   visibility: hidden;
@@ -916,20 +1132,27 @@ onUnmounted(() => {
   position: absolute;
   bottom: 80px;
   right: 20px;
-  background: white;
+  background: #fffaf0;
   padding: 12px 20px;
   border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(80, 60, 30, 0.25);
   display: flex;
   align-items: center;
   gap: 12px;
   z-index: 2002;
   animation: slideInUp 0.3s ease;
+  border: 1px solid #e3d3b8;
 }
 
 @keyframes slideInUp {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .typing-dots {
@@ -941,22 +1164,32 @@ onUnmounted(() => {
 .typing-dots span {
   width: 6px;
   height: 6px;
-  background: #4facfe;
+  background: var(--ai-gold);
   border-radius: 50%;
   animation: typing 1.4s infinite ease-in-out both;
 }
 
-.typing-dots span:nth-child(1) { animation-delay: -0.32s; }
-.typing-dots span:nth-child(2) { animation-delay: -0.16s; }
+.typing-dots span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+.typing-dots span:nth-child(2) {
+  animation-delay: -0.16s;
+}
 
 @keyframes typing {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1); }
+  0%,
+  80%,
+  100% {
+    transform: scale(0);
+  }
+  40% {
+    transform: scale(1);
+  }
 }
 
 .loading-indicator p {
   margin: 0;
-  color: #666;
+  color: #6f5a3c;
   font-size: 13px;
   font-weight: 500;
 }
@@ -979,3 +1212,4 @@ onUnmounted(() => {
   }
 }
 </style>
+
