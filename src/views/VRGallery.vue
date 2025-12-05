@@ -3,7 +3,7 @@
 
     <!-- 顶部 Banner -->
     <div class="banner-wrapper">
-      <img src="/00D.svg" class="banner" />
+      <img id="top-anchor" src="/00D.svg" class="banner" />
     </div>
 
     <div class="vr-title-wrapper">

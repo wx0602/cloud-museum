@@ -2,7 +2,7 @@
   <div class="museum-directory">
     <!-- Banner 区域 -->
     <div class="banner-wrapper">
-      <img src="/00C.svg" alt="博物馆目录 Banner" class="banner" />
+      <img id="top-anchor" src="/00C.svg" alt="博物馆目录 Banner" class="banner" />
     </div>
     <!-- 博物馆卡片展示区域 -->
     <div class="museums-container">

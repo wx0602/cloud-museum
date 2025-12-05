@@ -2,7 +2,7 @@
   <div class="gallery-root">
     <!-- 顶部 Banner -->
     <div class="banner-wrapper">
-      <img class="banner" src="/00A.svg" alt="展览横幅" />
+      <img id="top-anchor" class="banner" src="/00A.svg" alt="展览横幅" />
     </div>
 
     <div class="gallery-title-wrapper">
