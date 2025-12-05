@@ -1,7 +1,7 @@
 <template>
   <div class="home-container">
     <!-- 主图区域-->
-    <header class="hero">
+    <header id="top-anchor" class="hero">
       <div class="overlay"></div>
 
       <div class="hero-text">
