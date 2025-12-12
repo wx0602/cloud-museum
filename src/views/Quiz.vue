@@ -3,7 +3,7 @@
   <div class="quiz" :class="currentModeClass">
     <!-- 顶部横幅 -->
     <div class="banner-wrapper">
-      <img class="banner" src="/00B.svg" alt="展览横幅" />
+      <img id="top-anchor" class="banner" src="/00B.svg" alt="展览横幅" />
     </div>
     <div class="quiz-title-wrapper">
       <h2 class="section-title">文物问答</h2>

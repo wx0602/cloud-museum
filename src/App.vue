@@ -19,6 +19,19 @@ import NavBar from '@/components/NavBar.vue'
 import AiAssistant from '@/views/ai-assistant.vue'
 </script>
 
+<style>
+/* Global reset to ensure window scrolling works properly */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: auto;
+  width: 100%;
+}
+#app {
+  min-height: 100vh;
+}
+</style>
+
 <style scoped>
 .app-root {
   min-height: 100vh;
