@@ -1,26 +1,21 @@
 <template>
   <div class="museum-directory">
     <!-- Banner 区域 -->
-    <div class="banner">
-      <img :src="bannerImage" alt="博物馆目录 Banner" />
-      <div class="banner-overlay">
-        <h1 class="banner-title">中国数字博物馆导览</h1>
-        <p class="banner-subtitle">探索中华文明宝库，开启数字文化之旅</p>
-      </div>
+    <div class="banner-wrapper">
+      <img src="/00C.svg" alt="博物馆目录 Banner" class="banner" />
     </div>
-
     <!-- 博物馆卡片展示区域 -->
     <div class="museums-container">
       <h2 class="section-title">全国博物馆集锦</h2>
       
-      <el-row :gutter="30" class="museum-grid">
+      <el-row :gutter="24" class="museum-grid">
         <el-col 
           v-for="museum in museums" 
           :key="museum.id"
           :xs="24" 
-          :sm="24" 
+          :sm="12" 
           :md="12" 
-          :lg="12"
+          :lg="8"
           class="museum-col"
         >
           <el-card 
@@ -38,11 +33,16 @@
                 <el-icon><LocationFilled /></el-icon>
                 {{ museum.location }}
               </p>
-              <div class="description-row">
-                <p class="museum-description">{{ museum.description }}</p>
-                <el-button type="primary" link @click.stop="openWebsite(museum.website)" class="website-btn">
-                  访问官网→
-                  
+              <p class="museum-description">{{ museum.description }}</p>
+              <div class="card-footer">
+                <el-button
+                  class="visit-btn"
+                  type="primary"
+                  link
+                  @click.stop="openWebsite(museum.website)"
+                >
+                  访问官网
+                  <span class="plain-arrow">➔</span>
                 </el-button>
               </div>
             </div>
@@ -66,9 +66,6 @@ interface Museum {
   website: string
   location: string
 }
-
-// 导入 Banner 图片
-const bannerImage = new URL('../assets/MuseumDirectory/1.png', import.meta.url).href
 
 const museums = ref<Museum[]>([])
 
@@ -96,64 +93,42 @@ const openWebsite = (url: string) => {
 <style scoped>
 .museum-directory {
   min-height: 100vh;
-  background-color: #F6F1E7;
+  /*background-color: #F6F1E7; */
 }
 
-/* Banner 样式 */
+/*Banner 区域*/
+.banner-wrapper {
+  width: 100%;
+  max-width: 1200px;        
+  margin: 16px auto 32px;   
+  padding: 0 8px;         
+  box-sizing: border-box;
+}
+
 .banner {
-  position: relative;
   width: 100%;
-  height: 400px;
-  overflow: hidden;
-}
-
-.banner img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.banner-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
-
-.banner-title {
-  font-size: 48px;
-  font-weight: bold;
-  margin: 0 0 20px 0;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-.banner-subtitle {
-  font-size: 24px;
-  margin: 0;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  height: auto;            
+  display: block;
+  border: none;
+  border-radius: 0;         
 }
 
 /* 博物馆容器样式 */
 .museums-container {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 20px;
+  padding: 20px 24px 60px;
+  box-sizing: border-box;
 }
 
 .section-title {
   text-align: center;
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
-  color: #333;
-  margin-bottom: 50px;
+  color: #5b3a1a;          
+  margin-bottom: 36px;
   position: relative;
+  font-family: "Noto Serif SC", "Source Han Serif", serif;
 }
 
 .section-title::after {
@@ -161,18 +136,19 @@ const openWebsite = (url: string) => {
   display: block;
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #409EFF, #67C23A);
-  margin: 15px auto 0;
+  background: linear-gradient(90deg, #c79c5b, #e0d4c0);
+  margin: 12px auto 0;
   border-radius: 2px;
 }
 
-/* 卡片网格 */
+/*卡片*/
 .museum-grid {
-  margin-bottom: 40px;
+  margin: 0 -4px 32px;     
 }
 
 .museum-col {
-  margin-bottom: 30px;
+  padding: 4px;
+  margin-bottom: 20px;      
 }
 
 /* 博物馆卡片样式 */
@@ -184,11 +160,13 @@ const openWebsite = (url: string) => {
   height: 100%;
   display: flex;
   flex-direction: column;
+  border: 1px solid #e0d4c0;
+  background: #fffdf7;
 }
 
 .museum-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(143, 109, 54, 0.18);
 }
 
 .image-container {
@@ -214,17 +192,17 @@ const openWebsite = (url: string) => {
 
 /* 卡片内容 */
 .card-content {
-  padding: 20px;
+  padding: 16px 18px 14px;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .museum-name {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  color: #333;
-  margin: 0 0 10px 0;
+  color: #3b2a16;
+  margin: 0 0 8px 0;
   line-height: 1.4;
 }
 
@@ -232,9 +210,9 @@ const openWebsite = (url: string) => {
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 14px;
-  color: #909399;
-  margin: 0 0 12px 0;
+  font-size: 13px;
+  color: #9b8c76;
+  margin: 0 0 10px 0;
 }
 
 .description-row {
@@ -264,29 +242,22 @@ const openWebsite = (url: string) => {
 }
 
 .ml-5 {
-  margin-left: 5px;
+  margin-left: 4px;
 }
 
 /* 响应式适配 */
 @media (max-width: 768px) {
-  .banner {
-    height: 250px;
-  }
-  
-  .banner-title {
-    font-size: 32px;
-  }
-  
-  .banner-subtitle {
-    font-size: 16px;
-  }
-  
-  .section-title {
-    font-size: 28px;
-  }
-  
   .museums-container {
-    padding: 40px 15px;
+    padding: 32px 16px 40px;
+  }
+
+  .section-title {
+    font-size: 26px;
+    margin-bottom: 28px;
+  }
+
+  .image-container {
+    height: 200px;
   }
   
   .description-row {

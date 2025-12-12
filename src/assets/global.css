@@ -1,0 +1,40 @@
+/* src/styles/global.css */
+
+body {
+  margin: 0;
+  font-family: "PingFang SC", "Microsoft YaHei", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+
+  /* 仿你截图那种水墨金色底 */
+  background:
+    /* 左上偏亮的羽毛/光晕 */
+    radial-gradient(circle at 15% 0%,
+      rgba(255, 252, 247, 0.98) 0%,
+      rgba(248, 237, 217, 0.90) 35%,
+      transparent 70%
+    ),
+    /* 中央偏暖的金色大块晕染 */
+    radial-gradient(circle at 40% 55%,
+      rgba(235, 195, 120, 0.90) 0%,
+      rgba(219, 170, 92, 0.85) 30%,
+      transparent 70%
+    ),
+    /* 右侧偏灰金 / 水墨过渡 */
+    radial-gradient(circle at 90% 35%,
+      rgba(210, 190, 165, 0.85) 0%,
+      rgba(195, 167, 132, 0.85) 30%,
+      transparent 75%
+    ),
+    /* 整体底色：从上浅奶白到下金赭 */
+    linear-gradient(180deg,
+      #fdf8f1 0%,
+      #f5e4cd 40%,
+      #e3c38f 75%,
+      #d0a76c 100%
+    );
+
+  background-attachment: fixed;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: #3f3325;
+}

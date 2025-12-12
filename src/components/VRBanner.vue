@@ -28,10 +28,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-// 批量导入 src/assets/vr/ 下的图片
 const modules = import.meta.glob('@/assets/vr/*.png', { eager: true }) as Record<string, { default: string }>;
 
-const sortedKeys = Object.keys(modules).sort(); // 按文件名升序排序
+const sortedKeys = Object.keys(modules).sort(); 
 
 const names = ["故宫博物院", "上海博物馆（古犀献珍）", "中国国家博物馆"];
 const links = [
