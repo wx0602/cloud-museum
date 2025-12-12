@@ -258,13 +258,30 @@ const openWebsite = (url: string) => {
     padding: 32px 16px 40px;
   }
 
-  .section-title {
-    font-size: 26px;
-    margin-bottom: 28px;
-  }
-
   .image-container {
     height: 200px;
   }
+
+  .banner-wrapper {
+    max-width: 100%;
+    margin: 8px 0 8px;   
+    padding: 0;
+  }
+
+  .banner {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .vr-title-wrapper {
+    padding: 0 12px 0;   /* 取消原来 40px 的 padding-top，标题更贴近 banner */
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin: 0 0 12px;
+  }
 }
+
 </style>

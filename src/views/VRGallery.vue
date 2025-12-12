@@ -360,5 +360,28 @@ const openVR = (item) => {
   .gallery {
     grid-template-columns: 1fr;
   }
+
+  .banner-wrapper {
+    max-width: 100%;
+    margin: 8px 0 12px;   /* 顶部和底部间距都缩小 */
+    padding: 0;
+  }
+
+  /* banner 按整个视口宽度铺满，两侧不留间距 */
+  .banner {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);  /* 往左拉齐到屏幕边 */
+  }
+
+  /* 标题区域整体往上收一点，文字缩小 */
+  .vr-title-wrapper {
+    padding: 8px 12px 0;
+  }
+
+  .section-title {
+    font-size: 22px;      /* 比原来更小一点 */
+    margin-bottom: 12px;  /* 标题与下方间距缩小 */
+  }
 }
 </style>

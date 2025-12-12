@@ -495,4 +495,68 @@ function close() {
   color: #e74c3c;
   background: rgba(231, 76, 60, 0.1);
 }
+
+/* 小屏适配：banner 全宽铺满，标题变小，左右留少量边距，侧边栏挪到上面一行 */
+@media (max-width: 768px) {
+  /* 顶部 Banner 外层，不再居中收窄 */
+  .banner-wrapper {
+    max-width: 100%;
+    margin: 8px 0 8px;
+    padding: 0;
+  }
+
+  /* banner 按视口宽度铺满，两侧不留间距 */
+  .banner {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);  /* 向左拉齐到屏幕边 */
+  }
+
+  /* 标题整体往上收一点，左右加一点内边距 */
+  .gallery-title-wrapper {
+    padding: 8px 12px 0;
+  }
+
+  /* 标题变小一点，和下方间距缩小 */
+  .section-title {
+    font-size: 22px;
+    margin: 0 0 12px;
+  }
+
+  /* 主体布局左右留少一点空白 */
+  .layout {
+    padding: 0 12px 32px;
+    gap: 16px;
+  }
+
+  /* 侧边栏在小屏已经在 1000px 那个 media 里变成一行了，这里再压缩一下样式 */
+  .sidebar {
+    padding: 10px 10px 12px;
+    border-radius: 10px;
+  }
+
+  .nav-title {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .nav-item {
+    font-size: 13px;
+    padding: 6px 8px;
+  }
+
+  /* 卡片里的文字也稍微变小一点 */
+  .card-title {
+    font-size: 16px;
+  }
+
+  .card-desc {
+    font-size: 12px;
+  }
+
+  .card-content {
+    padding: 12px;
+  }
+}
+
 </style>

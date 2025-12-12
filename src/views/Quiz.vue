@@ -1417,9 +1417,32 @@ watch(
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .mode-select {
     grid-template-columns: 1fr;
   }
+
+  .banner-wrapper {
+    max-width: 100%;
+    margin: 8px 0 12px;
+    padding: 0;
+  }
+
+  .banner {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .vr-title-wrapper {
+    padding: 4px 12px 0;  /* 再缩小一点 */
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin-top: 0;         /* ✨关键：去掉标题上间距 */
+    margin-bottom: 12px;   
+  }
 }
+
 </style>
