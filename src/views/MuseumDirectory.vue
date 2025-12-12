@@ -2,7 +2,7 @@
   <div class="museum-directory">
     <!-- Banner 区域 -->
     <div class="banner-wrapper">
-      <img id="top-anchor" src="/00C.svg" alt="博物馆目录 Banner" class="banner" />
+      <img src="/00C.svg" alt="博物馆目录 Banner" class="banner" />
     </div>
     <!-- 博物馆卡片展示区域 -->
     <div class="museums-container">
@@ -171,18 +171,15 @@ const openWebsite = (url: string) => {
 
 .image-container {
   width: 100%;
-  height: 350px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #F6F1E7;
+  height: 240px;           
   overflow: hidden;
+  background-color: #f5f1e6;
 }
 
 .museum-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   transition: transform 0.3s ease;
 }
 
@@ -215,18 +212,11 @@ const openWebsite = (url: string) => {
   margin: 0 0 10px 0;
 }
 
-.description-row {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-top: 10px;
-}
-
 .museum-description {
-  font-size: 14px;
-  color: #666;
-  line-height: 1.8;
-  margin: 0;
+  font-size: 13px;
+  color: #5e4a32;
+  line-height: 1.7;
+  margin: 0 0 10px 0;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -236,9 +226,26 @@ const openWebsite = (url: string) => {
   line-clamp: 2;
 }
 
-.website-btn {
-  flex-shrink: 0;
-  white-space: nowrap;
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 6px 6px;
+  border-top: 1px solid #eee2cf;
+}
+
+.card-footer :deep(.visit-btn) {
+  font-size: 15px;
+  height: 24px;
+  line-height: 24px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.plain-arrow {
+  font-size: 18px;   
+  margin-left: 4px;
 }
 
 .ml-5 {
@@ -251,23 +258,30 @@ const openWebsite = (url: string) => {
     padding: 32px 16px 40px;
   }
 
-  .section-title {
-    font-size: 26px;
-    margin-bottom: 28px;
-  }
-
   .image-container {
     height: 200px;
   }
-  
-  .description-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
+
+  .banner-wrapper {
+    max-width: 100%;
+    margin: 8px 0 8px;   
+    padding: 0;
   }
-  
-  .website-btn {
-    align-self: flex-end;
+
+  .banner {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+  }
+
+  .vr-title-wrapper {
+    padding: 0 12px 0;   /* 取消原来 40px 的 padding-top，标题更贴近 banner */
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin: 0 0 12px;
   }
 }
+
 </style>
