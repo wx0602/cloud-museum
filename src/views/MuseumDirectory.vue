@@ -171,15 +171,18 @@ const openWebsite = (url: string) => {
 
 .image-container {
   width: 100%;
-  height: 240px;           
+  height: 350px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F6F1E7;
   overflow: hidden;
-  background-color: #f5f1e6;
 }
 
 .museum-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 0.3s ease;
 }
 
@@ -212,11 +215,18 @@ const openWebsite = (url: string) => {
   margin: 0 0 10px 0;
 }
 
+.description-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
 .museum-description {
-  font-size: 13px;
-  color: #5e4a32;
-  line-height: 1.7;
-  margin: 0 0 10px 0;
+  font-size: 14px;
+  color: #666;
+  line-height: 1.8;
+  margin: 0;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -226,26 +236,9 @@ const openWebsite = (url: string) => {
   line-clamp: 2;
 }
 
-.card-footer {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  padding: 6px 6px;
-  border-top: 1px solid #eee2cf;
-}
-
-.card-footer :deep(.visit-btn) {
-  font-size: 15px;
-  height: 24px;
-  line-height: 24px;
-  padding: 0 8px;
-  display: inline-flex;
-  align-items: center;
-}
-
-.plain-arrow {
-  font-size: 18px;   
-  margin-left: 4px;
+.website-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .ml-5 {
@@ -265,6 +258,16 @@ const openWebsite = (url: string) => {
 
   .image-container {
     height: 200px;
+  }
+  
+  .description-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .website-btn {
+    align-self: flex-end;
   }
 }
 </style>
