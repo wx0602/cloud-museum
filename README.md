@@ -1,25 +1,36 @@
-# vue3-memo
+# 云游博物馆（Cloud Museum Explorer）
 
-This template should help get you started developing with Vue 3 in Vite.
+> 一个基于 **Vue3 + Vite + Node.js** 的在线博物馆资源聚合平台，通过统一的前端界面整合各个线上博物馆的展览资源，让用户能够在网页端实现便捷、沉浸式的线上参观体验。
 
-## Recommended IDE Setup
+## 🌟 项目简介
+云游博物馆网页旨在整合多个线上博物馆的资源，集中展示各类展厅、展品信息、VR 数字内容、闯关问答以及解答疑问的AI机器人。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+通过访问本网站，用户可以通过这个平台快速跳转到各大博物馆的线上展览，提升线上参观的便利性。
 
-## Type Support for `.vue` Imports in TS
+本项目为前端主导，使用 Vue3 打造现代化 UI，并通过 Node.js 提供必要的数据接口或资源代理。
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+---
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+## 🌟 功能介绍
+- **首页**：包含精美的入场动画以及各个分页面的快捷按钮，点击最上方的按钮也可快速进行页面的切换。
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+- **博物馆导航栏**：集成了各个云博物馆的链接，保证了用户可以方便访问各个博物馆。
 
-## Customize configuration
+- **答题与问答机器人**：答题设有闯关模式和简单问答，用户可以根据需求自由选择，学习历史知识，点击右下角的玉制龙图案可以唤出解答机器人，可以和它对话解答疑惑。
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- **VR博物馆**：集成了国内国外博物馆的链接，内置小导航栏可以对博物馆进行搜索，导航栏下有各个标签，点击后可以对指定类型的博物馆进行筛选。
+
+- **著名展品集成**：集成了各个优质的历史文物图片，每个图片下方都附有介绍，左边有分类标签可以对指定的分类进行快速筛选。
+
+## 📦 技术栈（Tech Stack）
+
+- **前端框架**：Vue 3  
+- **构建工具**：Vite  
+- **后端环境**：Node.js  
+- **开发语言**：JavaScript  
+
+---
+
 
 ## Project Setup
 
