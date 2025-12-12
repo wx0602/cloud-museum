@@ -1434,8 +1434,8 @@ watch(
     margin-left: calc(50% - 50vw);
   }
 
-  .vr-title-wrapper {
-    padding: 4px 12px 0;  /* 再缩小一点 */
+  .quiz-title-wrapper {
+    padding: 8px 12px 0;  /* 与 VRGallery 页面保持一致 */
   }
 
   .section-title {

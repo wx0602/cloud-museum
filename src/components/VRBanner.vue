@@ -134,4 +134,20 @@ function goToVR(link: string) {
 .arrow:hover {
   background: rgba(0, 0, 0, 0.6);
 }
+
+/* 小屏适配 */
+@media (max-width: 768px) {
+  .caption h2 {
+    font-size: 1.5rem;  /* 缩小标题字体 */
+  }
+
+  .caption p {
+    font-size: 0.9rem;  /* 副标题也适当缩小 */
+  }
+
+  .arrow {
+    font-size: 2rem;  /* 缩小按钮字体 */
+    padding: 0 0.4rem;
+  }
+}
 </style>

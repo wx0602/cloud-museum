@@ -287,6 +287,7 @@ export default {
   .sections-inner {
     width: 100% !important;
     margin: 0 !important;
+    padding: 0 16px;  /* 添加左右内边距，防止按钮内容溢出 */
   }
 
   .section-card,
