@@ -263,9 +263,8 @@ export default {
 
 /* 小屏适配 */
 @media (max-width: 768px) {
-  /* 主图背景换成手机图 */
   .hero {
-    background-image: url("/phone-back.jpg"); /* 按你的真实文件名改扩展名 */
+    background-image: url("/phone-back.jpg"); 
     background-size: cover;
     background-position: center;
     width: 100vw;                          /* 按视口宽度铺 */
@@ -294,8 +293,8 @@ export default {
   .section-card:nth-child(odd),
   .section-card:nth-child(even) {
     box-sizing: border-box;
-    width: 100% !important;        /* 自己占满容器，不再 70% */
-    margin: 0 0 24px 0 !important;  /* 左右 margin 清零，只保留下边距 */
+    width: 100% !important;        
+    margin: 0 0 24px 0 !important;  
   }
 }
 </style>
