@@ -104,7 +104,12 @@
 import { ref, computed } from 'vue'
 import artifactsData from '@/assets/ArtifactDetail/relics.json'
 
-const artifacts = ref(artifactsData)
+const artifacts = ref(
+  artifactsData.map(item => ({
+    ...item,
+    img: new URL(item.img, import.meta.url).href
+  }))
+)
 
 const active = ref(null)
 const selectedDynasty = ref('全部')
