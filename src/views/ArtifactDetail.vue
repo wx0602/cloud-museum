@@ -101,7 +101,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import artifactsData from '@/assets/ArtifactDetail/relics.json'
 
 const artifacts = ref([])
