@@ -104,12 +104,33 @@
 import { ref, computed } from 'vue'
 import artifactsData from '@/assets/ArtifactDetail/relics.json'
 
-const artifacts = ref(
-  artifactsData.map(item => ({
-    ...item,
-    img: new URL(item.img, import.meta.url).href
-  }))
-)
+const artifacts = ref([])
+
+// 动态导入图片
+async function loadImages() {
+  artifacts.value = await Promise.all(
+    artifactsData.map(async (item) => {
+      try {
+        const imageModule = await import(`./assets/ArtifactDetail/${item.img.replace('./', '')}`)
+        return {
+          ...item,
+          img: imageModule.default || imageModule
+        }
+      } catch (error) {
+        console.error(`Failed to load image: ${item.img}`, error)
+        // 返回默认图片或保持原路径
+        return {
+          ...item,
+          img: item.img
+        }
+      }
+    })
+  )
+}
+
+onMounted(() => {
+  loadImages()
+})
 
 const active = ref(null)
 const selectedDynasty = ref('全部')
