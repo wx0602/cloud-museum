@@ -111,17 +111,28 @@ async function loadImages() {
   artifacts.value = await Promise.all(
     artifactsData.map(async (item) => {
       try {
-        const imageModule = await import(`./assets/ArtifactDetail/${item.img.replace('./', '')}`)
+        // views目录在src/下，assets也在src/下，所以使用../assets/
+        const imageModule = await import(`../assets/ArtifactDetail/${item.img.replace('./', '')}`)
         return {
           ...item,
           img: imageModule.default || imageModule
         }
       } catch (error) {
         console.error(`Failed to load image: ${item.img}`, error)
-        // 返回默认图片或保持原路径
-        return {
-          ...item,
-          img: item.img
+        
+        // 方法2：如果动态导入失败，使用URL构建
+        try {
+          const imgUrl = new URL(`../assets/ArtifactDetail/${item.img.replace('./', '')}`, import.meta.url).href
+          return {
+            ...item,
+            img: imgUrl
+          }
+        } catch (e) {
+          // 方法3：最后尝试使用相对路径
+          return {
+            ...item,
+            img: `src/assets/ArtifactDetail/${item.img.replace('./', '')}`
+          }
         }
       }
     })
@@ -134,6 +145,7 @@ onMounted(() => {
 
 const active = ref(null)
 const selectedDynasty = ref('全部')
+
 
 // 去重后的朝代表
 const dynasties = computed(() => {
