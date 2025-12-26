@@ -2,7 +2,7 @@ const http = require('http')
 const https = require('https')
 
 const PORT = process.env.PORT || 3001
-const API_KEY = process.env.DEEPSEEK_API_KEY || '' //这里填API
+const API_KEY = process.env.DEEPSEEK_API_KEY
 
 const send = (res, status, data, headers = {}) => {
   res.writeHead(status, {
