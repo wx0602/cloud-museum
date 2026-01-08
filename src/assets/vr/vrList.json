@@ -45,28 +45,28 @@
     "id": 7,
     "name": "卢浮宫",
     "description": "塞纳河畔的艺术王宫，米洛的维纳斯在此静默，达芬奇的微笑永恒。",
-    "tags": ["艺术", "历史"],
+    "tags": ["艺术", "历史","国际"],
     "link": "https://www.louvre.fr/visites-en-ligne/petitegalerie/saison6/"
   },
   {
     "id": 8,
     "name": "罗马梵蒂冈博物馆",
     "description": "仰望西斯廷教堂穹顶，米开朗基罗笔下的人类创世在此定格。",
-    "tags": ["艺术", "历史"],
+    "tags": ["艺术", "历史","国际"],
     "link": "https://www.museivaticani.va/content/museivaticani/en/collezioni/musei/tour-virtuali-elenco.1.html"
   },
   {
     "id": 9,
     "name": "美国国立自然历史博物馆",
     "description": "从巨型恐龙的骸骨到宇宙星尘，探寻地球与生命亿万年的壮阔进化史。",
-    "tags": ["艺术", "历史"],
+    "tags": ["艺术", "历史","国际"],
     "link": "https://naturalhistory2.si.edu/vt3/NMNH/"
   },
   {
     "id": 10,
     "name": "圣彼得堡冬宫博物馆",
     "description": "俄罗斯沙皇的冬日宫殿，用巴洛克的极致奢华承载欧洲艺术的万千珍藏。",
-    "tags": ["艺术", "历史"],
+    "tags": ["艺术", "历史","国际"],
     "link": "https://pano.hermitagemuseum.org/newpano/ru/main/"
   },
   {
