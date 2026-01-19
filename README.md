@@ -1,5 +1,7 @@
 # 云游博物馆（Cloud Museum Explorer）
 
+**网址**：https://cloud-museum-qttl.vercel.app/
+
 > 一个基于 **Vue3 + Vite + Node.js** 的在线博物馆资源聚合平台，通过统一的前端界面整合各个线上博物馆的展览资源，让用户能够在网页端实现便捷、沉浸式的线上参观体验。
 
 ## 🌟 项目简介
