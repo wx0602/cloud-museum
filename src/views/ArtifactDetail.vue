@@ -120,7 +120,7 @@ async function loadImages() {
       } catch (error) {
         console.error(`Failed to load image: ${item.img}`, error)
         
-        // 方法2：如果动态导入失败，使用URL构建
+        // 如果动态导入失败，使用URL构建
         try {
           const imgUrl = new URL(`../assets/ArtifactDetail/${item.img.replace('./', '')}`, import.meta.url).href
           return {
@@ -128,7 +128,7 @@ async function loadImages() {
             img: imgUrl
           }
         } catch (e) {
-          // 方法3：最后尝试使用相对路径
+          // 最后尝试使用相对路径
           return {
             ...item,
             img: `src/assets/ArtifactDetail/${item.img.replace('./', '')}`
@@ -474,7 +474,7 @@ function close() {
   background: rgba(231, 76, 60, 0.1);
 }
 
-/* 小屏适配：banner 全宽铺满，标题变小，左右留少量边距，侧边栏挪到上面一行 */
+/* 小屏适配 */
 @media (max-width: 768px) {
   /* 顶部 Banner 外层，不再居中收窄 */
   .banner-wrapper {
@@ -483,31 +483,31 @@ function close() {
     padding: 0;
   }
 
-  /* banner 按视口宽度铺满，两侧不留间距 */
+  /* banner 按视口宽度铺满*/
   .banner {
     width: 100vw;
     max-width: none;
     margin-left: calc(50% - 50vw);  /* 向左拉齐到屏幕边 */
   }
 
-  /* 标题整体往上收一点，左右加一点内边距 */
+  /* 左右加内边距 */
   .gallery-title-wrapper {
     padding: 8px 12px 0;
   }
 
-  /* 标题变小一点，和下方间距缩小 */
+  /* 标题变小一点 */
   .section-title {
     font-size: 22px;
     margin: 0 0 12px;
   }
 
-  /* 主体布局左右留少一点空白 */
+  /* 主体布局 */
   .layout {
     padding: 0 12px 32px;
     gap: 16px;
   }
 
-  /* 侧边栏在小屏已经在 1000px 那个 media 里变成一行了，这里再压缩一下样式 */
+  
   .sidebar {
     padding: 10px 10px 12px;
     border-radius: 10px;
@@ -523,7 +523,7 @@ function close() {
     padding: 6px 8px;
   }
 
-  /* 卡片里的文字也稍微变小一点 */
+  
   .card-title {
     font-size: 16px;
   }
