@@ -290,16 +290,16 @@ const openVR = (item) => {
   .banner {
     width: 100vw;
     max-width: none;
-    margin-left: calc(50% - 50vw);  /* 往左拉齐到屏幕边 */
+    margin-left: calc(50% - 50vw);  
   }
 
-  /* 标题区域整体往上收一点，文字缩小 */
+  
   .vr-title-wrapper {
     padding: 8px 12px 0;
   }
 
   .section-title {
-    font-size: 22px;      /* 比原来更小一点 */
+    font-size: 22px;      
     margin-bottom: 12px;  /* 标题与下方间距缩小 */
   }
 }
