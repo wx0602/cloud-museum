@@ -184,7 +184,7 @@
         <div class="progress-bar" :style="{ width: progress + '%' }"></div>
       </div>
 
-      <!-- 题目列表：5 题 -->
+      <!-- 题目列表 -->
       <div
         v-for="(q, index) in questions"
         :key="q.id"
@@ -210,7 +210,7 @@
           </li>
         </ul>
 
-        <!-- 解析：提交后显示 -->
+        <!-- 解析 -->
         <div v-if="isSubmitted" class="feedback">
           <div class="explanation">
             <strong>正确答案：{{ q.answerId }}</strong>
@@ -465,7 +465,7 @@ const isPass = computed(() => {
   return score >= questions.value.length * 12 // 60%
 })
 
-// 本地题库：和你原来的逻辑基本相同
+// 本地题库
 const loadLocalBank = (): Question[] => {
   try {
     const raw = localStorage.getItem(LOCAL_STORAGE_KEY)
@@ -804,7 +804,7 @@ watch(
 }
 
 
-/* 顶部横幅：像一幅挂轴 */
+/* 顶部横幅 */
 .banner-wrapper {
   width: 100%;
   max-width: 1200px;
@@ -853,8 +853,6 @@ watch(
 .mode-card--study {
   position: relative;
   overflow: hidden;
-
-  /* 用和学习模式一样的背景图 */
   background-image: url('/fang3.jpg');
   background-size: cover;
   background-position: center;
@@ -883,8 +881,6 @@ watch(
 .mode-card--challenge {
   position: relative;
   overflow: hidden;
-
-  /* 用和闯关模式一样的背景图 */
   background-image: url('/fang4.jpg');
   background-size: cover;
   background-position: center;
@@ -1073,7 +1069,6 @@ watch(
 
 /* 题目卡片 */
 .question-card {
-  /* 题目部分：更饱和的米色背景 */
   background:rgba(234,228,209);
   border-radius: 18px;
   padding: 1.6rem 1.6rem 1.4rem;
@@ -1435,12 +1430,12 @@ watch(
   }
 
   .quiz-title-wrapper {
-    padding: 8px 12px 0;  /* 与 VRGallery 页面保持一致 */
+    padding: 8px 12px 0;  
   }
 
   .section-title {
     font-size: 22px;
-    margin-top: 0;         /* ✨关键：去掉标题上间距 */
+    margin-top: 0;         /* 去掉标题上间距 */
     margin-bottom: 12px;   
   }
 }
