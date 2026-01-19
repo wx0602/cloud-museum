@@ -83,19 +83,19 @@ import { RouterLink } from 'vue-router'
 /* 小屏导航栏适配 */
 @media (max-width: 768px) {
   .nav {
-    height: 56px;         /* 导航条稍微矮一点 */
-    padding-left: 16px;   /* 左边内边距收窄 */
-    gap: 12px;            /* 链接之间的间距变小 */
+    height: 56px;         
+    padding-left: 16px;   
+    gap: 12px;            
   }
 
   .nav a {
     font-size: 14px;      /* 字体缩小一点 */
-    padding: 0 2px;       /* 左右 padding 收窄，避免挤出屏幕 */
+    padding: 0 2px;       /* 左右 padding 收窄 */
   }
 
   .nav a + a::before {
     left: -8px;           /* 分割线位置跟着缩进 */
-    height: 18px;         /* 分割线稍微变短一点 */
+    height: 18px;         
   }
 }
 
