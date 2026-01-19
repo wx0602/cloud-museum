@@ -66,8 +66,8 @@ function goToVR(link: string) {
 
 <style scoped>
 .banner {
-  width: 80%;           /* 占屏幕宽度 80% */
-  height: 70vh;         /* 保持高度 70% 屏幕 */
+  width: 80%;           
+  height: 70vh;         
   margin: 0 auto;       /* 水平居中 */
   position: relative;
   overflow: hidden;
@@ -142,7 +142,7 @@ function goToVR(link: string) {
   }
 
   .caption p {
-    font-size: 0.9rem;  /* 副标题也适当缩小 */
+    font-size: 0.9rem;  /* 副标题适当缩小 */
   }
 
   .arrow {
